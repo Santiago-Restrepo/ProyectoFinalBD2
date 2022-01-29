@@ -4,7 +4,6 @@ import {Register} from './pages/Register'
 import {Login} from './pages/Login'
 import {Home} from './pages/Home'
 import {Profile} from './pages/Profile'
-import {Chat} from './pages/Chat'
 import {NotFound} from './pages/NotFound'
 import { Context } from './Context';
 
@@ -15,9 +14,9 @@ import './global.sass';
 
 /** Contexto */ 
 export const App = () => {
-
+    
     return (
-        <Context.Provider value={"hola:1"}>
+        <Context.Provider value={""}>
                 <BrowserRouter>
                     { /** Lo que cambiará */}
                     <Switch>
@@ -25,7 +24,6 @@ export const App = () => {
                         <Route exact path="/home" component={Home} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/profile" component={Profile} />
-                        <Route exact path="/chat" component={Chat} />
                         <Route path="*" component={NotFound} />
                     </Switch>
                 </BrowserRouter>

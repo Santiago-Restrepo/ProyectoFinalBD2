@@ -1,13 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link , Redirect} from 'react-router-dom';
 import { useForm } from "react-hook-form";
-
-import img1 from '../assets/Rectangle49.png'
-import img2 from '../assets/Rectangle50.png'
-import img3 from '../assets/Rectangle52.png'
-import img4 from '../assets/Rectangle53.png'
-import img5 from '../assets/Rectangle54.png'
-import img6 from '../assets/Rectangle55.png'
 
 export const Login = () => {
     const { register, handleSubmit, reset } = useForm();
@@ -25,6 +18,7 @@ export const Login = () => {
         :
         reset();
     }
+    
     return (
         <main>
             {
