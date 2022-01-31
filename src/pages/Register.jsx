@@ -106,6 +106,7 @@ export const Register = () => {
                                 })
                             }
                         </div>
+                        <input type="button" onClick={()=>{addNetworkToSelected()}} value='Añadir otra red social'/>
                         {
                             universityInfo ? 
                             <>
@@ -117,7 +118,6 @@ export const Register = () => {
                                         })
                                     }
                                 </select>
-                                <input type="button" onClick={()=>{addNetworkToSelected()}} value='Añadir otra red social'/>
                                 <br />
                                 <label htmlFor="">Sede</label>
                                 <br />
