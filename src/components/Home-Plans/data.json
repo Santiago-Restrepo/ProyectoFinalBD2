@@ -1,0 +1,58 @@
+[
+    {
+    "semestre":2022,
+    "periodo": 2,
+    "grupo": 3,
+    "asignatura":"Bases de datos 2",
+    "docente":"Monica Rojas"
+    },
+    {
+        "semestre":2022,
+        "periodo": 2,
+        "grupo": 1,
+        "asignatura":"Análisis numérico",
+        "docente":"Julián Bustamante"
+    },
+    {
+        "semestre":2022,
+        "periodo": 2,
+        "grupo": 2,
+        "asignatura":"Emprendimiento",
+        "docente":"Jesús Londoño"
+    },
+    {
+        "semestre":2022,
+        "periodo": 2,
+        "grupo": 4,
+        "asignatura":"Teoría de la información",
+        "docente":"Mauricio Correa"
+    },
+    {
+        "semestre":2022,
+        "periodo": 2,
+        "grupo": 5,
+        "asignatura":"Proyecto de software",
+        "docente":"Adriana Reyes"
+    },
+    {
+        "semestre":2022,
+        "periodo": 2,
+        "grupo": 6,
+        "asignatura":"As-400",
+        "docente":"Monica Rojas"
+    },
+    {
+        "semestre":2022,
+        "periodo": 2,
+        "grupo": 6,
+        "asignatura":"Sistemas operativos",
+        "docente":"Jhon Jairo Montoya"
+    },
+    {
+        "semestre":2022,
+        "periodo": 2,
+        "grupo": 7,
+        "asignatura":"Inglés",
+        "docente":"Sergio Urrego"
+    }
+]
