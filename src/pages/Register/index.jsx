@@ -3,6 +3,8 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
+import './style.sass'
+
 export const Register = () => {
     const { register, handleSubmit, reset } = useForm();
     const socialNetworks=[
@@ -28,8 +30,8 @@ export const Register = () => {
     }
 
     const addNetworkToSelected = ()=>{
-        const lastSocialNetworkName = document.querySelector('.socalMedia').lastChild.firstChild.value;
-        const lastSocialNetworkUsername = document.querySelector('.socalMedia').lastChild.lastChild.value;
+        const lastSocialNetworkName = document.querySelector('.socialMedia').lastChild.firstChild.value;
+        const lastSocialNetworkUsername = document.querySelector('.socialMedia').lastChild.lastChild.value;
         let auxiliarNetworkList = [...selectedNetworks];
         auxiliarNetworkList.unshift({network: lastSocialNetworkName,username: lastSocialNetworkUsername})
         setSelectedNetworks(auxiliarNetworkList);
@@ -70,11 +72,18 @@ export const Register = () => {
     },[]);
     
     return (
-        <main>
+        <main className='singInUpMain'>
+            <header>
+                <img src="" alt="" />
+            </header>
+            <section className='hero'>
+                <h1>Nombre de la app</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
+            </section>
             {
                 
                 !userRegistered ?
-                <form onSubmit={handleSubmit(postRegisterData)}>
+                <form className="registerForm" onSubmit={handleSubmit(postRegisterData)}>
                         <h1>Regístrate ahora</h1>
                         <p>¿Ya tienes una cuenta? <Link to="/login">Ingresa</Link></p>
                         <label htmlFor="fullName">Nombre completo</label>
@@ -84,9 +93,9 @@ export const Register = () => {
                         <label htmlFor="password">Contraseña</label>
                         <input id="password" type="password" {...register("password")}/>
                         <label htmlFor="passwordConfirmed">Confirmar contraseña</label>
-                        <input id="passwordConfirmed" type="passwordConfirmed" {...register("passwordConfirmed")} />
+                        <input id="passwordConfirmed" type="password" {...register("passwordConfirmed")} />
                         <label>Redes sociales</label>
-                        <div className='socalMedia'>
+                        <div className='socialMedia'>
                             {
                                 selectedNetworks.map((network,index) =>{
                                     return (
@@ -106,7 +115,7 @@ export const Register = () => {
                                 })
                             }
                         </div>
-                        <input type="button" onClick={()=>{addNetworkToSelected()}} value='Añadir otra red social'/>
+                        <input type="button" className="addNetwork" onClick={()=>{addNetworkToSelected()}} value='Añadir otra red social'/>
                         {
                             universityInfo ? 
                             <>
@@ -118,9 +127,7 @@ export const Register = () => {
                                         })
                                     }
                                 </select>
-                                <br />
                                 <label htmlFor="">Sede</label>
-                                <br />
                                 <select {...register('campus')} defaultValue={universityInfo.campus[0].name}>
                                     {
                                         universityInfo.campus.map((campus, index)=>{
@@ -132,8 +139,7 @@ export const Register = () => {
                             :
                             null
                         }
-                        <br />
-                        <input type="submit" value='Registrarse'/>
+                        <input className="submitButton" type="submit" value='Registrarse'/>
                 </form>
                 : <Redirect to="/login"/>
             }

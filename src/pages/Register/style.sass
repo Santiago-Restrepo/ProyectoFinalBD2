@@ -1,0 +1,99 @@
+.singInUpMain
+    padding: 1rem 1rem
+    color: #2c2c2c
+    header
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+    .hero
+        text-align: center
+        margin: 1rem 0
+        h1
+            font-size: 1.5rem
+            margin-bottom: 1rem
+        p
+            font-weight: 400
+            color: #545454
+    .registerForm
+        width: 100%
+        max-width: 30rem
+        margin: 0 auto
+        box-sizing: border-box
+        padding: 1.5rem
+        box-shadow: 0 2px 5px #00000065
+        border-radius: 1rem
+        *
+            font-size: 1rem
+        h1,p
+            text-align: center
+        h1
+            font-size: 1.3rem
+        p
+            margin: .5rem 0 1.5rem
+            font-size: 1rem
+            font-weight: 300
+            a
+                font-weight: 500
+                text-decoration: none
+                color: #00923F
+        input, select
+            display: block
+            width: 100%
+            border: none
+            border-bottom: 1px solid #00923F
+            outline: 1px solid transparent 
+        label
+            margin: 1rem 0
+            display: block
+            font-size: .9rem
+            font-weight: 300
+            color: #545454
+        select
+            width: 100%
+        .socialMedia
+            .socialMediaContainer
+                display: grid
+                grid-template-columns: 1fr 1fr
+                column-gap: .5rem
+                margin-bottom: 1rem
+        .addNetwork
+            color: #00923F
+            font-weight: 500
+            border: none
+            text-align: start
+            cursor: pointer
+        .submitButton
+            width: 70%
+            max-width: 10rem
+            padding: .5rem
+            border-radius: 1rem
+            margin: 1rem auto 0
+            background-color: #00923F
+            color: white
+            font-weight: 600
+            border: none
+            cursor: pointer
+            transition: .3s
+        .submitButton:hover
+            background-color: #01882a
+@media screen and (min-width: 1024px)
+    body
+        height: 100vh
+        #app
+            height: 100%
+    .singInUpMain
+        display: grid
+        grid-template-columns: 1fr 1fr
+        column-gap: 3rem
+        justify-items: center
+        align-items: center
+        height: 100%
+        margin: 0 auto
+        width: 100%
+        max-width: 70rem
+        .hero
+            margin: 1rem 2rem
+        .registerForm
+            label
+                font-size: 1rem
