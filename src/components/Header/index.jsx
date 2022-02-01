@@ -1,5 +1,7 @@
 import React from 'react';
 
+import logo from '../../assets/logo.svg'
+
 export const Header = ({ name }) =>{
 
     import('./estilos.sass');
@@ -7,7 +9,7 @@ export const Header = ({ name }) =>{
     return(
         <header>
             <div>
-                <img src="" alt="Logo del PCJIC" />
+                <img src={logo} alt="Logo del PCJIC" />
                 <h2>Nombre de la app</h2>
                 <div className="Links">
                     <a href="">Inicio</a>
