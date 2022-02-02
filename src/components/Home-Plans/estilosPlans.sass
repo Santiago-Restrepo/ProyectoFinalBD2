@@ -1,15 +1,38 @@
 .Card
-    width: 13.25rem
+    width: 12.25rem
     height: 8.25rem
-    margin: 2rem auto
+    margin: 1rem 1.6rem 
     padding: 1rem
     background-color: #F8F8F8
     border-radius: 1.875rem
     text-align: center
     font-family: 'roboto'
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25)
     p
-        margin-top: 1rem
+        margin-top: 0.6rem
     a
         color: #00923F
         display: block
         margin-top: 2rem
+    .ButtonDelete
+        margin-top: 0rem
+        box-sizing: border-box
+        display: flex
+        justify-content: right
+        button
+            width: 1.5rem
+            height: 1.5rem
+            border-radius: 50%
+            border: none
+            background-color: red
+            opacity: 0.9
+            color: white
+            box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25)
+
+@media screen and ( min-width: 768px )// MediaQuery para los dispositivos Tablet
+    .Card
+        margin: 1.2rem 2.6rem 
+
+@media screen and ( min-width: 1024px ) //MediaQuery para los dispositivos desktop
+    .Card
+        margin: 1.3rem 2.7rem

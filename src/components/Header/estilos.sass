@@ -1,0 +1,41 @@
+header
+    width: 100%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    font-family: 'roboto'
+    img
+        width: 80%
+        margin: 1.5rem 1rem 1.5rem
+    .Links
+        width: 95%
+        margin: 2.3rem 0rem 1.5rem
+        display: flex
+        justify-content: space-around
+        a
+            color: black
+            cursor: pointer
+
+
+@media screen and ( min-width: 768px )// MediaQuery para los dispositivos Tablet
+    header
+        flex-direction: row
+        justify-content: space-between
+        img
+            width: 30%
+            margin: 2rem 2rem 1.5rem
+        .Links
+            width: 20%
+            margin: 2.2rem 2rem 2rem
+
+
+@media screen and ( min-width: 1024px ) // MediaQuery para los dispositivos Desktop
+    header
+        justify-content: space-around
+        img
+            width: 25%
+        .Links
+            width: 30%
+            font-size: 1.1rem
+        

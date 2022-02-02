@@ -1,12 +1,19 @@
 import React from 'react';
 
-export const Plans = ( {asignature, year, periodo} ) =>{
+export const Plans = ( {setShowDelete, value} ) =>{
 
     import('./estilosPlans.sass');
+
     return(
         <div className='Card'>
-            <p>{asignature}</p>
-            <p>{year} - {periodo}</p>
+            <div className='ButtonDelete'>
+                <button onClick={()=> setShowDelete({
+                    show: true,
+                    data: value
+                })}>X</button>
+            </div>
+            <p>{value.asignatura}</p>
+            <p>{value.semestre} - {value.periodo}</p>
             <a href="">Ver plan</a>
         </div>
     );
