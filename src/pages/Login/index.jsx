@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link , Redirect} from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import logo from '../../assets/logo.svg'
 
 export const Login = () => {
     const { register, handleSubmit, reset } = useForm();
@@ -22,7 +23,7 @@ export const Login = () => {
     return (
         <main className='singInUpMain'>
             <header>
-                <img src="" alt="" />
+                <img src={logo} alt="" />
             </header>
             <section className='hero'>
                 <h1>Nombre de la app</h1>
@@ -39,6 +40,7 @@ export const Login = () => {
                         <label htmlFor="password">Contraseña</label>
                         <input {...register("password")} id="password" type="password"/>
                         <input className='submitButton' type='submit' value="Iniciar sesión"/>
+                        <Link to="/">¿No recuerdas tu contraseña?</Link>
                     </form>
                 </>
                 : <Redirect to='/home'/>

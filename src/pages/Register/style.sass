@@ -3,12 +3,15 @@
     color: #2c2c2c
     header
         position: absolute
-        top: 0
+        top: 1rem
         left: 0
         right: 0
+        display: flex
+        justify-content: center
+        align-items: center
     .hero
         text-align: center
-        margin: 1rem 0
+        margin: 6rem 0 1rem
         h1
             font-size: 1.5rem
             margin-bottom: 1rem
@@ -25,6 +28,12 @@
         border-radius: 1rem
         *
             font-size: 1rem
+        a   
+            display: block
+            text-align: center
+            font-weight: 500
+            text-decoration: none
+            color: #00923F
         h1,p
             text-align: center
         h1
@@ -34,9 +43,7 @@
             font-size: 1rem
             font-weight: 300
             a
-                font-weight: 500
-                text-decoration: none
-                color: #00923F
+                display: inline
         input, select
             display: block
             width: 100%
@@ -68,7 +75,7 @@
             max-width: 10rem
             padding: .5rem
             border-radius: 1rem
-            margin: 1rem auto 0
+            margin: 1rem auto
             background-color: #00923F
             color: white
             font-weight: 600
@@ -92,6 +99,9 @@
         margin: 0 auto
         width: 100%
         max-width: 70rem
+        header
+            justify-content: flex-start
+            left: 2rem
         .hero
             margin: 1rem 2rem
         .registerForm

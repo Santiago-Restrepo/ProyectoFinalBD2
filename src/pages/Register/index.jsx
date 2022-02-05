@@ -2,22 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-
+import logo from '../../assets/logo.svg'
 import './style.sass'
 
+const socialNetworks=[
+    {
+        name: "Facebook"
+    },
+    {
+        name: "Instagram"
+    },
+    {
+        name: "Twitter"
+    },
+    {
+        name: 'Linkedin'
+    }
+];
 export const Register = () => {
     const { register, handleSubmit, reset } = useForm();
-    const socialNetworks=[
-        {
-            name: "Facebook"
-        },
-        {
-            name: "Instagram"
-        },
-        {
-            name: "Twitter"
-        }
-    ];
     const [selectedNetworks, setSelectedNetworks] = useState([{network: "",username: ""}]);
     const [userRegistered, setUserRegistered] = useState(false);
     const [universityInfo, setUniversityInfo] = useState(null);
@@ -74,7 +77,7 @@ export const Register = () => {
     return (
         <main className='singInUpMain'>
             <header>
-                <img src="" alt="" />
+                <img src={logo} alt="" />
             </header>
             <section className='hero'>
                 <h1>Nombre de la app</h1>
