@@ -10,10 +10,12 @@ export const EvaluationPlan = () => {
     return (
         <>
             <Header/>
-            <h3 className='firstTitle'>Nuevo plan de evaluación</h3>
-            <NewPlan/>
-            <h3 className='secondTitle'>Ingreso de notas</h3>
-            <Notes/>
+            <div className="plans">
+                <h3 className='firstTitle'>Nuevo plan de evaluación</h3>
+                <NewPlan/>
+                <h3 className='secondTitle'>Ingreso de notas</h3>
+                <Notes/>
+            </div>
         </>
     );
-}
+};
