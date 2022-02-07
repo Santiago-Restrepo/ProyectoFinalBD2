@@ -1,0 +1,110 @@
+.plans
+    margin: 2rem 5% 0
+
+.firstTitle, .secondTitle
+    font-size: 20px
+    font-style: normal
+    font-weight: 500
+    margin-bottom: 1rem
+
+.newPlan
+    background: #F8F8F8
+    border-radius: 1.875rem
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+    margin-bottom: 2rem
+    padding: .5rem 1.5rem 1.5rem
+    &__form
+        position: relative
+        fieldset
+            border: 0
+            display: flex
+            flex-direction: row
+            flex-wrap: wrap
+            justify-content: space-evenly
+            label
+                color: #545454
+                font-weight: 500
+                margin: 1rem 0 .5rem 0
+            input
+                background-color: #F8F8F8
+                border: 0 
+                border-bottom: 1px solid #00923F
+                border-top-left-radius: 10px
+                border-top-right-radius: 10px
+                color: #000000
+                font-weight: 100
+                padding: .2rem
+            input[type="text"]:disabled
+                background-color: #eeeeee
+            label, input
+                font-size: 18px
+                font-style: normal
+    &__field
+        align-items: flex-start
+        display: flex
+        flex-direction: column
+    &__pencilBtn
+        background-color: #F8F8F8
+        border: 0
+        cursor: pointer
+        margin-top: 0.5rem
+        position: absolute
+        right: 0
+        top: 0
+        &:hover
+            filter: opacity(.5)
+            transition: all .2s ease
+        img
+            height: 1.5rem
+            width: 1.5rem
+    &__buttons
+        display: flex
+        justify-content: space-evenly
+    &__submitBtn
+        background: #00923F
+        &:hover
+            box-shadow: 0 2px 10px #00923F
+            transition: all .2s ease
+    &__cancelBtn
+        background: #dc143c
+        &:hover
+            box-shadow: 0 2px 10px #dc143c
+            transition: all .2s ease
+    &__submitBtn, &__cancelBtn
+        border: 0
+        border-radius: 20px
+        color: #FFFFFF
+        cursor: pointer
+        font-size: 16px
+        font-style: normal
+        font-weight: normal
+        height: 50px
+        margin-top: 1rem
+        width: 100px
+
+@media screen and ( min-width: 768px )
+    .firstTitle, .secondTitle
+        font-size: 24px
+    .newPlan
+        padding: 0 2rem 2rem
+        &__form
+            fieldset
+                label
+                    margin: 2rem 0 .5rem 0
+                label, input
+                    font-size: 20px
+        &__pencilBtn
+            margin-top: 1.5rem
+            img
+                height: 2rem
+                width: 2rem
+        &__submitBtn, &__cancelBtn
+            font-size: 20px
+            height: 50px
+            margin-top: 2rem
+            width: 200px
+
+@media screen and ( min-width: 1024px )
+    .firstTitle, .secondTitle
+        font-size: 28px
+        margin-bottom: 2rem
