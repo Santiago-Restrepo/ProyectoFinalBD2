@@ -8,6 +8,7 @@ import { CreatePlan } from './pages/CreatePlan';
 import { ViewPlan } from './pages/ViewPlan';
 import { NotFound } from './pages/NotFound'
 import { Context } from './Context';
+import { Nuevo } from './pages/crear';
 
 /** Componentes */
 
@@ -36,6 +37,7 @@ export const App = () => {
                             <Route exact path="/createPlan" component={CreatePlan} />
                             <Route exact path="/viewPlan" component={ViewPlan} />
                             <Route exact path="/profile" component={Profile} />
+                            <Route exact path="/nuevo" component={Nuevo} />
                             <Route path="*" component={NotFound} />
                         </Switch>
                     </BrowserRouter>
