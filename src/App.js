@@ -15,26 +15,30 @@ import './global.sass';
 
 /** Contexto */ 
 export const App = () => {
-    
-    const [userAutentication, setUserAutentication] = useState({});
 
+    const localStorageUserAutentication = JSON.parse(localStorage.getItem('userAutentication'));
+    const [userAutentication, setUserAutentication] = useState(localStorageUserAutentication ? localStorageUserAutentication : {});
     return (
-        <Context.Provider value={{
-            userAutentication,
-            setUserAutentication
-        }
-        }>
-                <BrowserRouter>
-                    { /** Lo que cambiará */}
-                    <Switch>
-                        <Route exact path="/" component={Register} />
-                        <Route exact path="/home" component={Home} />
-                        <Route exact path="/login" component={Login} />
-                        <Route exact path="/evaluation-plan" component={EvaluationPlan} />
-                        <Route exact path="/profile" component={Profile} />
-                        <Route path="*" component={NotFound} />
-                    </Switch>
-                </BrowserRouter>
-        </Context.Provider>
+        userAutentication &&
+        <>
+            <Context.Provider value={{
+                userAutentication,
+                setUserAutentication
+            }
+            }>
+                    <BrowserRouter>
+                        { /** Lo que cambiará */}
+                        <Switch>
+                            <Route exact path="/" component={Register} />
+                            <Route exact path="/home" component={Home} />
+                            <Route exact path="/login" component={Login} />
+                            <Route exact path="/evaluation-plan" component={EvaluationPlan} />
+                            <Route exact path="/profile" component={Profile} />
+                            <Route path="*" component={NotFound} />
+                        </Switch>
+                    </BrowserRouter>
+            </Context.Provider>
+        </>
+        
     )
 }
