@@ -7,6 +7,7 @@ import { Profile } from './pages/Profile'
 import { EvaluationPlan } from './pages/EvaluationPlan';
 import { NotFound } from './pages/NotFound'
 import { Context } from './Context';
+import { Nuevo } from './pages/crear';
 
 /** Componentes */
 
@@ -34,6 +35,7 @@ export const App = () => {
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/evaluation-plan" component={EvaluationPlan} />
                             <Route exact path="/profile" component={Profile} />
+                            <Route exact path="/nuevo" component={Nuevo} />
                             <Route path="*" component={NotFound} />
                         </Switch>
                     </BrowserRouter>
