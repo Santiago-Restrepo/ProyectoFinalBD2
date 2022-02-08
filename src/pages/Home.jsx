@@ -7,13 +7,14 @@ import { Context } from '../Context';
 export const Home = () => {
     const history = useHistory();
     const {userAutentication, setUserAutentication} = useContext(Context);
+    
     if (Object.keys(userAutentication).length === 0) {
         history.push('/login')
     }
     return (
         <>
-            <Header />
-            <HomePlans />
+            <Header userAutentication={userAutentication}/>
+            <HomePlans userAutentication={userAutentication}/>
         </>
     );
 }

@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
-import { debug } from 'webpack';
+import React, { useEffect, useState } from 'react';
 import { ScreenDelete } from '../Delete';
 
 
-import data from './data.json';
+//import data from './data.json';
 
 import { Plans } from './plans';
 
-export const HomePlans = () =>{
+export const HomePlans = ( {userAutentication} ) =>{
+    const [data, setData] = useState("");
     const [showDelete, setShowDelete] = useState({show:false,data:""});
     import('./estilos.sass');
+
+    const getPlans = async () =>{
+        const response = await fetch('https://paseraspandoapi.vercel.app/planes',{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userAutentication.token}`
+            },
+            method: 'GET'
+        });
+        const responseJson = await response.json();
+        setData(responseJson.Planes);
+        console.log(responseJson);
+    }
+    useEffect(()=>{
+        getPlans();
+    },[])
 
     return(
         <>
@@ -21,7 +37,7 @@ export const HomePlans = () =>{
                             <Plans setShowDelete={setShowDelete} value={value} key={`asignatura-${index}`}/>
                         );
                     })
-                    :<h2>Aún no tienes un plan de evaluación</h2>
+                    :<h2 className='TitleEmpty'>Aún no tienes un plan de evaluación</h2>
                 }
             </div>
                 <button className='ButtonAdd'><a href="">+</a></button>     
