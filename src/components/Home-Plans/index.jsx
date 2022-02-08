@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { ScreenDelete } from '../Delete';
-
+import { Context } from '../../Context';
 
 //import data from './data.json';
 
 import { Plans } from './plans';
 
-export const HomePlans = ( {userAutentication} ) =>{
+export const HomePlans = () =>{
+    const {userAutentication} = useContext(Context);
     const [data, setData] = useState("");
     const [showDelete, setShowDelete] = useState({show:false,data:""});
     import('./estilos.sass');

@@ -1,13 +1,17 @@
-import React from 'react';
+import React, {useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Context } from '../../Context';
 
 import logo from '../../assets/logo.svg'
 
-export const Header = ({ userAutentication }) =>{
-
+export const Header = () =>{
+    const {userAutentication, setUserAutentication} = useContext(Context);
     import('./estilos.sass');
+    const history = useHistory();
 
     const handleExit = () =>{
-        localStorage.setItem('userAutentication','{}')
+        localStorage.setItem('userAutentication','{}');
+        setUserAutentication({});
     }
     return(
         <header>
@@ -16,7 +20,7 @@ export const Header = ({ userAutentication }) =>{
                 <div className="Links">
                     <a href="">Inicio</a>
                     <p className="NameProfile">{userAutentication.User.name}</p>
-                    <button className='Exit' onClick={handleExit()}>Salir</button>
+                    <button className='Exit' onClick={handleExit}>Salir</button>
                 </div>
         </header>
     );
