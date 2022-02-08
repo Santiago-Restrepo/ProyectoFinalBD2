@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
@@ -20,14 +20,28 @@ const socialNetworks=[
     }
 ];
 export const Register = () => {
+
     const { register, handleSubmit, reset } = useForm();
     const [selectedNetworks, setSelectedNetworks] = useState([{network: "",username: ""}]);
     const [userRegistered, setUserRegistered] = useState(false);
     const [universityInfo, setUniversityInfo] = useState(null);
     const [campus, setCampus] = useState([]);
-    const postRegisterData = (data) => {
+    const postRegisterData = async (data) => {
         /*Conexión con base de datos para guardar lo que haya en data*/
-        console.log(data)
+        const response = await fetch('https://paseraspandoapi.vercel.app/new_user',{
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                name: data.name,
+                email: data.email,
+                password: data.password,
+                network: data.socialNetworks,
+                program: data.universityProgram,
+                sede: data.campus
+            })
+        })
         reset();
         setUserRegistered(true);
     }

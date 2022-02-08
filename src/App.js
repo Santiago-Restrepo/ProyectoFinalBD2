@@ -16,8 +16,14 @@ import './global.sass';
 /** Contexto */ 
 export const App = () => {
     
+    const [userAutentication, setUserAutentication] = useState({});
+
     return (
-        <Context.Provider value={""}>
+        <Context.Provider value={{
+            userAutentication,
+            setUserAutentication
+        }
+        }>
                 <BrowserRouter>
                     { /** Lo que cambiará */}
                     <Switch>

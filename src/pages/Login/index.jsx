@@ -1,23 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { Link , Redirect} from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link , Redirect, useHistory} from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import logo from '../../assets/logo.svg'
+import { Context } from '../../Context';
 
 export const Login = () => {
+
+    const history = useHistory();
+    const {setUserAutentication} = useContext(Context);
     const { register, handleSubmit, reset } = useForm();
     const [userLogged, setUserLogged] = useState(false);
-    const queryDatabase = (data) => {
+    const queryDatabase = async (data) => {
         /*Consulta a la base de datos*/
-        const user = {
-            data: '',
-            logged: false
-        };
+        try {
+            
+            const user = {
+                data: '',
+                logged: false
+            };
+    
+            const response = await fetch('https://paseraspandoapi.vercel.app/login',{
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    email: data.email,
+                    password: data.password
+                })
+            });
+    
+            const jsonResponse = await response.json();
+            setUserAutentication(jsonResponse);
+            
+            history.push('/home')
 
-        user.logged ? 
-        /*Darle un valor al contexto sobre la información del usuario logeado */
-        setUserLogged(true)
-        :
-        reset();
+            
+        } catch (error) {
+            alert('Usuario o contraseña incorrectos')
+            console.error(error)
+        }
     }
     
     return (
