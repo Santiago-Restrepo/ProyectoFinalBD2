@@ -1,7 +1,10 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { Context } from '../../Context';
+import { useHistory } from 'react-router-dom';
+
 import logo from '../../assets/logo.svg'
 import './style.sass'
 
@@ -20,7 +23,11 @@ const socialNetworks=[
     }
 ];
 export const Register = () => {
-
+    const history = useHistory();
+    const {userAutentication} = useContext(Context);
+    if (Object.keys(userAutentication).length !== 0) {
+        history.push('/home')
+    }
     const { register, handleSubmit, reset } = useForm();
     const [selectedNetworks, setSelectedNetworks] = useState([{network: "",username: ""}]);
     const [userRegistered, setUserRegistered] = useState(false);
@@ -53,8 +60,9 @@ export const Register = () => {
         auxiliarNetworkList.unshift({network: lastSocialNetworkName,username: lastSocialNetworkUsername})
         setSelectedNetworks(auxiliarNetworkList);
     }
-    useEffect(()=>{
+    useEffect(async ()=>{
         /*Conexión con la base de datos para traer los programas que se encuentran guardados*/
+
         setUniversityInfo({
             programs: [
                 {
@@ -94,7 +102,7 @@ export const Register = () => {
                 <img src={logo} alt="" />
             </header>
             <section className='hero'>
-                <h1>Nombre de la app</h1>
+                <h1>PaséRaspando</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
             </section>
             {
@@ -134,7 +142,7 @@ export const Register = () => {
                         </div>
                         <input type="button" className="addNetwork" onClick={()=>{addNetworkToSelected()}} value='Añadir otra red social'/>
                         {
-                            universityInfo ? 
+                            universityInfo &&
                             <>
                                 <label htmlFor="">Programa académico</label>
                                 <select {...register('universityProgram')} defaultValue={universityInfo.programs[0].name}>
@@ -153,8 +161,6 @@ export const Register = () => {
                                     }
                                 </select>
                             </>
-                            :
-                            null
                         }
                         <input className="submitButton" type="submit" value='Registrarse'/>
                 </form>
