@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Link , Redirect, useHistory} from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link , useHistory, Redirect } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
@@ -8,9 +8,7 @@ export const Login = () => {
 
     const history = useHistory();
     const {setUserAutentication, userAutentication} = useContext(Context);
-    if (Object.keys(userAutentication).length !== 0) {
-        history.push('/home')
-    }
+
     const { register, handleSubmit, reset } = useForm();
     const postLoginData = async (data) => {
         /*Consulta a la base de datos*/
@@ -28,7 +26,7 @@ export const Login = () => {
             const jsonResponse = await response.json();
             localStorage.setItem('userAutentication', JSON.stringify(jsonResponse));
             setUserAutentication(jsonResponse);
-            history.push('/home')
+            history.push('/home');
         } catch (error) {
             alert('Usuario o contraseña incorrectos')
             console.error(error)
@@ -36,6 +34,7 @@ export const Login = () => {
     }
     
     return (
+        Object.keys(userAutentication).length === 0 ?
         <main className='singInUpMain'>
             <header>
                 <img src={logo} alt="" />
@@ -54,6 +53,6 @@ export const Login = () => {
                     <input className='submitButton' type='submit' value="Iniciar sesión"/>
                     <Link to="/">¿No recuerdas tu contraseña?</Link>
                 </form>
-        </main>
+        </main> : <Redirect to="/home" />
     );
 }

@@ -14,8 +14,8 @@ export const Home = () => {
     return (   
             Object.keys(userAutentication).length !== 0 &&    
             <>
-                <HomePlans />
                 <Header />
+                <HomePlans />
             </>
     );
 }

@@ -12,6 +12,7 @@ export const Header = () =>{
     const handleExit = () =>{
         localStorage.setItem('userAutentication','{}');
         setUserAutentication({});
+        history.push('/login');
     }
     return(
         <header>
