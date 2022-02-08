@@ -3,6 +3,7 @@ import { Link , useHistory, Redirect } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
+import './style.sass'
 
 export const Login = () => {
 
@@ -10,6 +11,8 @@ export const Login = () => {
     const {setUserAutentication, userAutentication} = useContext(Context);
 
     const { register, handleSubmit, reset } = useForm();
+    const [isPasswordShowed, setIsPasswordShowed] = useState(false);
+
     const postLoginData = async (data) => {
         /*Consulta a la base de datos*/
         try {    
@@ -32,6 +35,12 @@ export const Login = () => {
             console.error(error)
         }
     }
+
+    const togglePassword = ()=>{
+        const passwordInput = document.getElementById('password');
+        passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
+        setIsPasswordShowed(!isPasswordShowed);
+    }
     
     return (
         Object.keys(userAutentication).length === 0 ?
@@ -47,9 +56,15 @@ export const Login = () => {
                     <h1>Ingresa ahora</h1>
                     <p>¿No tienes una cuenta? <Link to="/">Regístrate</Link></p>
                     <label htmlFor="email">Correo electrónico</label>
-                    <input input="email" type="mail" {...register("email")} />
+                    <input input="email" type="mail" {...register("email")} required/>
                     <label htmlFor="password">Contraseña</label>
-                    <input {...register("password")} id="password" type="password"/>
+                    <div className="password">
+                        <input {...register("password")} id="password" type="password" required/>
+                        <button type='button' 
+                        className={isPasswordShowed ? 'unshowed':'showed'} 
+                        onClick={togglePassword}>
+                        </button>
+                    </div>
                     <input className='submitButton' type='submit' value="Iniciar sesión"/>
                     <Link to="/">¿No recuerdas tu contraseña?</Link>
                 </form>
