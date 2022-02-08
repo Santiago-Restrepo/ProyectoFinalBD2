@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Register } from './pages/Register'
 import { Login } from './pages/Login'
 import { Home } from './pages/Home'
 import { Profile } from './pages/Profile'
-import { EvaluationPlan } from './pages/EvaluationPlan';
+import { CreatePlan } from './pages/CreatePlan';
+import { ViewPlan } from './pages/ViewPlan';
 import { NotFound } from './pages/NotFound'
 import { Context } from './Context';
 
@@ -32,7 +33,8 @@ export const App = () => {
                             <Route exact path="/" component={Register} />
                             <Route exact path="/home" component={Home} />
                             <Route exact path="/login" component={Login} />
-                            <Route exact path="/evaluation-plan" component={EvaluationPlan} />
+                            <Route exact path="/createPlan" component={CreatePlan} />
+                            <Route exact path="/viewPlan" component={ViewPlan} />
                             <Route exact path="/profile" component={Profile} />
                             <Route path="*" component={NotFound} />
                         </Switch>

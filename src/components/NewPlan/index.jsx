@@ -1,27 +1,32 @@
-import React, { useLayoutEffect, useState } from 'react';
+/** LIBRERIAS */
+import React, { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import lapiz from '../../assets/lapiz.png'
-
+/** ESTILOS */
 import './estilos.sass';
 
-export const NewPlan = () => {
-    const [ editable, setEditable ] = useState(false);
+export const NewPlan = ({dataPlan}) => {
     const { register, handleSubmit, setValue } = useForm();
+
+    const periodos = ['1', '2'];
+
+    const grupos = ['G-01', 'G-02', 'G-03'];
+
+    const asignaturas = ['Calculo diferencial', 'Bases de datos 2', 'Algoritmos y programación', 'Estadistica aplicada'];
+
+    const docentes = ['Monica Rojas', 'Luz Paez', 'Eva luna', 'Luis Gonzalo'];
 
     const newPlan = {
         id: '1',
         semestre: '2021',
         periodo: '2',
-        grupo: '1',
+        grupo: 'G-03',
         asignatura: 'Bases de datos 2',
         docente: 'Monica Rojas'
     }
     
     const updateDatabase = (data) => {
-        console.log(data);
-        // ACTUALIZAR EN LA BASE DE DATOS
-        setEditable(false);
+        dataPlan(data);
     }
     
     useLayoutEffect(() => {
@@ -37,40 +42,45 @@ export const NewPlan = () => {
 
     return (
         <div className='newPlan'>
-            <form className="newPlan__form" onSubmit={handleSubmit(updateDatabase)}>
+            <form className="newPlan__form" id="newPlan__form" onSubmit={handleSubmit(updateDatabase)}>
                 <fieldset>
                     <div className="newPlan__field">
                         <label htmlFor="semestre">Semestre</label>
-                        <input input="semestre" id="semestre" type="text" {...register("semestre", {required: true, maxLength: 4})} disabled={!editable} />
+                        <input input="semestre" id="semestre" type="text" {...register("semestre", {required: true, maxLength: 4})} />
                     </div>
                     <div className="newPlan__field">
                         <label htmlFor="periodo">Periodo</label>
-                        <input input="periodo" id="periodo" type="text" {...register("periodo", {required: true, maxLength: 1})} disabled={!editable} />
-                    </div>
-                    <div className="newPlan__field">
-                        <label htmlFor="grupo">Grupo</label>
-                        <input input="grupo" id="grupo" type="text" {...register("grupo", {required: true, maxLength: 1})} disabled={!editable} />
+                        <select name="periodo" id="periodo" {...register("periodo")} >
+                            {
+                                periodos.map((periodo, index) => <option key={index} >{periodo}</option>)
+                            }
+                        </select>
                     </div>
                     <div className="newPlan__field">
                         <label htmlFor="asignatura">Asignatura</label>
-                        <input input="asignatura" id="asignatura" type="text" {...register("asignatura", {required: true, maxLength: 40})} disabled={!editable} />
+                        <select name="asignatura" id="asignatura" {...register("asignatura")} >
+                            {
+                                asignaturas.map((asignatura, index) => <option key={index} >{asignatura}</option>)
+                            }
+                        </select>
+                    </div>
+                    <div className="newPlan__field">
+                        <label htmlFor="grupo">Grupo</label>
+                        <select name="grupo" id="grupo" {...register("grupo")} >
+                            {
+                                grupos.map((grupo, index) => <option key={index} >{grupo}</option>)
+                            }
+                        </select>
                     </div>
                     <div className="newPlan__field">
                         <label htmlFor="docente">Docente</label>
-                        <input input="docente" id="docente" type="text" {...register("docente", {required: true, maxLength: 40})} disabled={!editable} />
+                        <select name="docente" id="docente" {...register("docente")} >
+                            {
+                                docentes.map((docente, index) => <option key={index} >{docente}</option>)
+                            }
+                        </select>
                     </div>
                 </fieldset>
-                {
-                    editable ?
-                        <div className='newPlan__buttons'>
-                            <input className="newPlan__submitBtn" type="submit" value="Actualizar" />
-                            <button className="newPlan__cancelBtn" onClick={() => setEditable(false)}>Cancelar</button>
-                        </div>
-                    :
-                        <button className="newPlan__pencilBtn" onClick={() => setEditable(true)}>
-                            <img src={lapiz} alt="Editar" title='Editar' />
-                        </button>
-                }
             </form>
         </div>
     );
