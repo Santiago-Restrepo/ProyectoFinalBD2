@@ -8,7 +8,6 @@ export const Notes = ({setNotes, click, setClick }) => {
 	let data = [];
 	
 	const addHomework = ()=>{
-		// console.log(Table.current);
 		const row = `
 		<tr>
 			<td><button id="${Table.current.rows.length}">🪓</button></td>
@@ -27,7 +26,6 @@ export const Notes = ({setNotes, click, setClick }) => {
 		.addEventListener('click', (e) => deleteItem(parseInt(e.target.id)));
 	}
 	const deleteItem = (index) => {
-		console.log(index)
 		Table.current.deleteRow(index);
 		
 		Array.from(Table.current.rows).forEach(function (fila, ind) {
@@ -38,7 +36,7 @@ export const Notes = ({setNotes, click, setClick }) => {
 		});
 	}
 	const getPlans = ()=>{
-		console.log("dió click");
+		// console.log("dió click");
 		setClick(false);
 		Array.from(Table.current.rows).forEach(function (fila, ind) {
 			if(ind !== 0){

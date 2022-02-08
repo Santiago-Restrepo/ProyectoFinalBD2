@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 /** ESTILOS */
 import './estilos.sass';
 
-export const NewPlan = ({dataPlan}) => {
+export const NewPlan = ({setPlan}) => {
     const { register, handleSubmit, setValue } = useForm();
 
     const periodos = ['1', '2'];
@@ -26,7 +26,7 @@ export const NewPlan = ({dataPlan}) => {
     }
     
     const updateDatabase = (data) => {
-        dataPlan(data);
+		setPlan(data);
     }
     
     useLayoutEffect(() => {

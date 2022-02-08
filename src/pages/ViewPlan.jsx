@@ -21,7 +21,6 @@ export const ViewPlan = () => {
 
     const saveData = () => {
         setClick(true);
-        console.log(enviarPlan);
     }
     
     return (
@@ -29,7 +28,7 @@ export const ViewPlan = () => {
             <Header/>
             <div className="plans">
                 <h3 className='firstTitle'>Nuevo plan de evaluación</h3>
-                <NewPlan dataPlan={setenviarPlan}  />
+                <NewPlan setPlan={setenviarPlan}  />
                 <h3 className='secondTitle'>Ingreso de notas</h3>
                 <Notes/>
             </div>
