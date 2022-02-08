@@ -11,8 +11,7 @@ export const Home = () => {
     if (Object.keys(userAutentication).length === 0) {
         history.push('/login')
     }
-    return (
-        
+    return (   
             Object.keys(userAutentication).length !== 0 &&    
             <>
                 <HomePlans />
