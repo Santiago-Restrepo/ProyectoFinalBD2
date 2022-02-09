@@ -17,28 +17,58 @@ export const CreatePlan = () => {
     Object.keys(userAutentication).length === 0 && history.push('/login');
 
     const [notes, setNotes] = useState({});//estado para guardar la data entre padre e hijo
-    const [click, setClick] = useState(false);//estado para saber cuando hacer autoclick en los hijos
 
     const [ enviarPlan, setEnviarPlan ] = useState({});
-
-    /***no olvidar el setClick(false) */
     
-    const saveData = () => {
-        setClick(true);
-        console.log(notes);
-        console.log(enviarPlan);
+    const saveData = async () => {
+        try {
+            //** ENVIO A LA BASE DE DATOS DEL NEWPLAN */
+            const responsePlan = await fetch('https://paseraspandoapi.vercel.app/new_plan', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userAutentication.token}`
+                },
+                method: 'POST',
+                body: JSON.stringify(enviarPlan)
+            });
+    
+            const responseJsonPlan = await responsePlan.json();
+            console.log(responseJsonPlan);
+
+            const PLAN_ID = responseJsonPlan.newPlan.insertedId;
+            
+            //** ENVIO A LA BASE DE DATOS DE NOTES */
+            const responseNotes = await fetch(`https://paseraspandoapi.vercel.app/new_note/${PLAN_ID}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userAutentication.token}`
+                },
+                method: 'POST',
+                body: JSON.stringify(notes)
+            });
+    
+            const responseJsonNotes = await responseNotes.json();
+            console.log(responseJsonNotes);
+            
+            history.push('/home');
+        } catch (error) {
+            alert("Ha sucedido un error 😫");
+        }
+        
     }
+
+    let {id} = useParams();
 
     return (
         <>
             <Header/>
             <div className="plans">
                 <h3 className='firstTitle'>Nuevo plan de evaluación</h3>
-                <NewPlan setPlan={setEnviarPlan} />
+                <NewPlan setPlan={setEnviarPlan} mode={id}/>
                 <h3 className='secondTitle'>Ingreso de notas</h3>
-                <Notes setNotes={setNotes} click = {click} setClick = {setClick}/>
+                <Notes setNotes={setNotes} />
             </div>
-            <button className="btnGuardarPlan" form="newPlan__form" onClick={()=> saveData()}>Guardar plan</button>{/**cambia nombre por props */}
+            <button className="btnGuardarPlan" onClick={() => saveData()} disabled={Object.keys(enviarPlan).length === 0 || Object.keys(notes).length === 0} >Guardar plan</button>{/**cambia nombre por props */}
         </>
     );
 };

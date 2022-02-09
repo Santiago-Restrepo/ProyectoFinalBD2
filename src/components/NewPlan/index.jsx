@@ -1,86 +1,115 @@
 /** LIBRERIAS */
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 /** ESTILOS */
 import './estilos.sass';
 
-export const NewPlan = ({setPlan}) => {
+export const NewPlan = ({setPlan, mode}) => {
     const { register, handleSubmit, setValue } = useForm();
+    const [ planInfo, setplanInfo ] = useState({});
 
     const periodos = ['1', '2'];
-
-    const grupos = ['G-01', 'G-02', 'G-03'];
-
-    const asignaturas = ['Calculo diferencial', 'Bases de datos 2', 'Algoritmos y programación', 'Estadistica aplicada'];
-
-    const docentes = ['Monica Rojas', 'Luz Paez', 'Eva luna', 'Luis Gonzalo'];
-
-    const newPlan = {
-        id: '1',
-        semestre: '2021',
-        periodo: '2',
-        grupo: 'G-03',
-        asignatura: 'Bases de datos 2',
-        docente: 'Monica Rojas'
-    }
     
     const updateDatabase = (data) => {
 		setPlan(data);
     }
-    
-    useLayoutEffect(() => {
-        const setValuesDatabase = (database) => {
-            setValue("semestre", database.semestre);
-            setValue("periodo", database.periodo);
-            setValue("grupo", database.grupo);
-            setValue("asignatura", database.asignatura);
-            setValue("docente", database.docente);
+
+    useEffect(async () => {
+        try {
+            const responseAsignaturas = await fetch('https://paseraspandoapi.vercel.app/asignaturas');
+            const responseJsonAsignaturas = await responseAsignaturas.json();
+            console.log(responseJsonAsignaturas);
+
+            const responseGrupos = await fetch('https://paseraspandoapi.vercel.app/grupos');
+            const responseJsonGrupos = await responseGrupos.json();
+            console.log(responseJsonGrupos);
+            
+            const responseDocentes = await fetch('https://paseraspandoapi.vercel.app/empleados');
+            const responseJsonDocentes = await responseDocentes.json();
+            console.log(responseJsonDocentes);
+
+            setplanInfo({
+                asignaturas: responseJsonAsignaturas.asignaturas,
+                grupos: responseJsonGrupos.grupos,
+                docentes: responseJsonDocentes.empleados
+            });
+
+        } catch (error) {
+            alert("Ha sucedido un error 😫");
         }
-        setValuesDatabase(newPlan);
+    }, []);
+
+    useLayoutEffect(() => {
+        if(mode){
+            const setValuesDatabase = (database) => {
+                setValue("semestre", database.semestre);
+                setValue("periodo", database.periodo);
+                setValue("grupo", database.grupo);
+                setValue("asignatura", database.asignatura);
+                setValue("docente", database.docente);
+            }
+            /** HACER FETCH Y PASAR LOS VALORES DE LA BD CON EL ID QUE VIENE POR URL */
+            // setValuesDatabase(newPlan);
+        }
     });
 
     return (
         <div className='newPlan'>
             <form className="newPlan__form" id="newPlan__form" onSubmit={handleSubmit(updateDatabase)}>
-                <fieldset>
-                    <div className="newPlan__field">
-                        <label htmlFor="semestre">Semestre</label>
-                        <input input="semestre" id="semestre" type="text" {...register("semestre", {required: true, maxLength: 4})} />
-                    </div>
-                    <div className="newPlan__field">
-                        <label htmlFor="periodo">Periodo</label>
-                        <select name="periodo" id="periodo" {...register("periodo")} >
-                            {
-                                periodos.map((periodo, index) => <option key={index} >{periodo}</option>)
-                            }
-                        </select>
-                    </div>
-                    <div className="newPlan__field">
-                        <label htmlFor="asignatura">Asignatura</label>
-                        <select name="asignatura" id="asignatura" {...register("asignatura")} >
-                            {
-                                asignaturas.map((asignatura, index) => <option key={index} >{asignatura}</option>)
-                            }
-                        </select>
-                    </div>
-                    <div className="newPlan__field">
-                        <label htmlFor="grupo">Grupo</label>
-                        <select name="grupo" id="grupo" {...register("grupo")} >
-                            {
-                                grupos.map((grupo, index) => <option key={index} >{grupo}</option>)
-                            }
-                        </select>
-                    </div>
-                    <div className="newPlan__field">
-                        <label htmlFor="docente">Docente</label>
-                        <select name="docente" id="docente" {...register("docente")} >
-                            {
-                                docentes.map((docente, index) => <option key={index} >{docente}</option>)
-                            }
-                        </select>
-                    </div>
-                </fieldset>
+                {
+                    Object.keys(planInfo).length === 0 ?
+                    <h1 className='newPlan__loader'>...Cargando Información...</h1>
+                    :
+                    <>
+                        <fieldset>
+                            <div className="newPlan__field">
+                                <label htmlFor="semestre">Semestre</label>
+                                <input input="semestre" id="semestre" type="text" required maxLength={4} {...register("semestre")} />
+                            </div>
+                            <div className="newPlan__field">
+                                <label htmlFor="periodo">Periodo</label>
+                                <select name="periodo" id="periodo" required {...register("periodo")} >
+                                    <option value="">-</option>
+                                    {
+                                        periodos.map((periodo, index) => <option key={index} >{periodo}</option>)
+                                    }
+                                </select>
+                            </div>
+                            <div className="newPlan__field">
+                                <label htmlFor="asignatura">Asignatura</label>
+                                <select name="asignatura" id="asignatura" required {...register("asignatura")} >
+                                    <option value="">-</option>
+                                    {
+                                        planInfo.asignaturas.map((asignatura, index) => <option key={index} >{asignatura.nombre}</option>)
+                                    }
+                                </select>
+                            </div>
+                            <div className="newPlan__field">
+                                <label htmlFor="grupo">Grupo</label>
+                                <select name="grupo" id="grupo" required {...register("grupo")} >
+                                    <option value="">-</option>
+                                    {
+                                        planInfo.grupos.map((grupo, index) => <option key={index} >{grupo.numero}</option>)
+                                    }
+                                </select>
+                            </div>
+                            <div className="newPlan__field">
+                                <label htmlFor="docente">Docente</label>
+                                <select name="docente" id="docente" required {...register("docente")} >
+                                    <option value="">-</option>
+                                    {
+                                        planInfo.docentes.map((docente, index) => <option key={index} >{docente.nombres + " " + docente.apellidos}</option>)
+                                    }
+                                </select>
+                            </div>
+                        </fieldset>
+                        <div className="newPlan__buttons">
+                            <input className="newPlan__submitBtn" type="submit" value="Confirmar" />
+                            <input className="newPlan__cancelBtn" type="submit" value="Cancelar" />
+                        </div>
+                    </>
+                }
             </form>
         </div>
     );

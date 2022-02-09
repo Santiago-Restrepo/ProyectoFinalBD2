@@ -1,12 +1,13 @@
+/** LIBRERIAS */
 import React, { useRef } from 'react';
 
 /** ESTILOS */
 import './estilos.sass';
 
-export const Notes = ({setNotes, click, setClick }) => {
+export const Notes = ({setNotes}) => {
 	const Table = useRef(null);
 	let data = [];
-	
+
 	const addHomework = ()=>{
 		const row = `
 		<tr>
@@ -25,6 +26,7 @@ export const Notes = ({setNotes, click, setClick }) => {
 		.firstElementChild
 		.addEventListener('click', (e) => deleteItem(parseInt(e.target.id)));
 	}
+
 	const deleteItem = (index) => {
 		Table.current.deleteRow(index);
 		
@@ -35,9 +37,8 @@ export const Notes = ({setNotes, click, setClick }) => {
 			}
 		});
 	}
+
 	const getPlans = ()=>{
-		// console.log("dió click");
-		setClick(false);
 		Array.from(Table.current.rows).forEach(function (fila, ind) {
 			if(ind !== 0){
 				let dataRow = {};
@@ -53,10 +54,10 @@ export const Notes = ({setNotes, click, setClick }) => {
 	}
 
 	return (	
-		<section>
-			<table ref={Table}>
+		<section className='notes'>
+			<table ref={Table} className='notes__table'>
 				<tbody>
-					<tr>
+					<tr className='notes__table--headers'>
 						<th></th>
 						<th>Nro </th>
 						<th>Nombre </th>
@@ -67,7 +68,7 @@ export const Notes = ({setNotes, click, setClick }) => {
 				</tbody>
 			</table>
 			<div><button onClick={()=>{addHomework()}} >+ Nuevo</button></div>
-			<button onClick={click ? getPlans(): null}></button>
+			<button onClick={() => {getPlans()}}>Confirmar</button>
 		</section>
 	);
 };

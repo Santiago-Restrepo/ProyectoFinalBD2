@@ -1,6 +1,6 @@
 /** LIBRERIAS */
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 /** COMPONENTES */
 import { Header } from '../components/Header';
@@ -17,22 +17,23 @@ export const ViewPlan = () => {
     Object.keys(userAutentication).length === 0 && history.push('/login');
     
     const [ enviarPlan, setenviarPlan ] = useState({});
-    const [ click, setClick ] = useState({});
 
     const saveData = () => {
-        setClick(true);
+        
     }
     
+    let {id} = useParams();
+
     return (
         <>
             <Header/>
             <div className="plans">
                 <h3 className='firstTitle'>Nuevo plan de evaluación</h3>
-                <NewPlan setPlan={setenviarPlan}  />
+                <NewPlan setPlan={setenviarPlan} mode={id}/>
                 <h3 className='secondTitle'>Ingreso de notas</h3>
                 <Notes/>
             </div>
-            <button className="btnGuardarPlan" form="newPlan__form"  onClick={() => saveData()} >Guardar Plan</button>
+            <button className="btnGuardarPlan" onClick={() => saveData()} >Guardar Plan</button>
         </>
     );
 };
