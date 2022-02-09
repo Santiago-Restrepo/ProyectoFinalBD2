@@ -19,9 +19,6 @@ const socialNetworks=[
         name: "Twitter"
     },
     {
-        name: 'Linkedin'
-    },
-    {
         name: 'Otra'
     }
 ];
@@ -32,11 +29,12 @@ export const Register = () => {
         history.push('/home')
     }
     const { register, handleSubmit, reset } = useForm();
+    //Estado para controlar la inserción de nuevas redes
     const [selectedNetworks, setSelectedNetworks] = useState([{network: "",username: ""}]);
     const [userRegistered, setUserRegistered] = useState(false);
+    //Estado encargado de controlar la información sobre la universidad traída de la base de datos
     const [universityInfo, setUniversityInfo] = useState(null);
-    const [isOtherSelected, setIsOtherSelected] = useState(false);
-    
+    //Funcion encargada de realizar la inserción de datos de registro en la base de datos
     const postRegisterData = async (data) => {
         /*Conexión con base de datos para guardar lo que haya en data*/
         const response = await fetch('https://paseraspandoapi.vercel.app/new_user',{
@@ -57,21 +55,20 @@ export const Register = () => {
         setUserRegistered(true);
     }
 
+    //Función encargada de añadir una nueva red al formulario
     const addNetworkToSelected = ()=>{
         const lastSocialNetworkName = document.querySelector('.socialMedia').lastChild.firstChild.value;
         const lastSocialNetworkUsername = document.querySelector('.socialMedia').lastChild.lastChild.value;
-
         let auxiliarNetworkList = [...selectedNetworks];
         auxiliarNetworkList.unshift({network: lastSocialNetworkName,username: lastSocialNetworkUsername})
-        setIsOtherSelected(false);
         setSelectedNetworks(auxiliarNetworkList);
     }
-
+    //Función encargada de cambiar el placeholder dependiendo del valor del select de su izquierda
     const changePlaceholder = (event)=>{
         event.target.value === 'Otra' ? event.target.nextElementSibling.setAttribute('placeholder', 'Url de la red')
         : event.target.nextElementSibling.setAttribute('placeholder', 'Nombre de usuario')
     }
-
+    //Hook de efecto para recibir la información de la base de datos sql
     useEffect(async ()=>{
         /*Conexión con la base de datos para traer los programas que se encuentran guardados*/
         const programsResponse = await fetch('https://paseraspandoapi.vercel.app/programas');
@@ -95,6 +92,7 @@ export const Register = () => {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
             </section>
             {
+                // Preguntamos si un usuario ya se registró para que si se cumple la condición lo redirigamos al Login
                 !userRegistered ?
                 <form className="registerForm" onSubmit={handleSubmit(postRegisterData)}>
                         <h1>Regístrate ahora</h1>
@@ -125,7 +123,7 @@ export const Register = () => {
                         </div>
                         <input type="button" className="addNetwork" onClick={()=>{addNetworkToSelected()}} value='Añadir otra red social'/>
                         {
-                            universityInfo &&
+                            universityInfo ?
                             <>
                                 <label htmlFor="">Programa académico</label>
                                 <select {...register('universityProgram')} required>
@@ -144,6 +142,7 @@ export const Register = () => {
                                     }
                                 </select>
                             </>
+                            : <h1>Loading...</h1>
                         }
                         <input className="submitButton" type="submit" value='Registrarse'/>
                 </form>
