@@ -11,7 +11,7 @@ export const Notes = ({setNotes}) => {
 	const addHomework = ()=>{
 		const row = `
 		<tr>
-			<td><button id="${Table.current.rows.length}">🪓</button></td>
+			<td><button class='homework__button--delete' title='Eliminar tarea' id="${Table.current.rows.length}">🪓</button></td>
 			<td>${Table.current.rows.length}</td>
 			<td><input type="text"/></td>
 
@@ -54,21 +54,27 @@ export const Notes = ({setNotes}) => {
 	}
 
 	return (	
-		<section className='notes'>
-			<table ref={Table} className='notes__table'>
-				<tbody>
-					<tr className='notes__table--headers'>
-						<th></th>
-						<th>Nro </th>
-						<th>Nombre </th>
-						<th>Descripción </th>
-						<th>Porcentaje </th>
-						<th>Nota </th>
-					</tr>
-				</tbody>
-			</table>
-			<div><button onClick={()=>{addHomework()}} >+ Nuevo</button></div>
-			<button onClick={() => {getPlans()}}>Confirmar</button>
+		<section>
+			<div className='container__homeworks'>
+				<table ref={Table} className='homeworks'>
+					<tbody>
+						<tr>
+							<th></th>
+							<th>Nro </th>
+							<th>Nombre </th>
+							<th>Descripción </th>
+							<th>Porcentaje </th>
+							<th>Nota </th>
+						</tr>
+					</tbody>
+				</table>
+				<div className='homeworks__btn--new'>
+					<button title='Nueva tarea' onClick={()=>{addHomework()}} >+ Nuevo</button>
+				</div>
+			</div>
+			<div className='homeworks__btn--confirm'>
+				<button title='Confirmar cambios' onClick={click ? getPlans(): null}>Confirmar</button>
+			</div>
 		</section>
 	);
 };
