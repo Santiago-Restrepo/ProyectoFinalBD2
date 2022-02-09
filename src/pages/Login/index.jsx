@@ -11,8 +11,10 @@ export const Login = () => {
     const {setUserAutentication, userAutentication} = useContext(Context);
 
     const { register, handleSubmit, reset } = useForm();
+    //Estado para controlar la visión de la contraseña
     const [isPasswordShowed, setIsPasswordShowed] = useState(false);
 
+    //Función engargada de realizar el inicio de sesión
     const postLoginData = async (data) => {
         /*Consulta a la base de datos*/
         try {    
@@ -27,15 +29,16 @@ export const Login = () => {
                 })
             });
             const jsonResponse = await response.json();
+            //Guardamos la información de inicio de sesión en el localStorage y actualizamos el estado para renderizar nuevamente
             localStorage.setItem('userAutentication', JSON.stringify(jsonResponse));
             setUserAutentication(jsonResponse);
             history.push('/home');
         } catch (error) {
-            alert('Usuario o contraseña incorrectos')
-            console.error(error)
+            alert('Usuario o contraseña incorrectos');
+            console.error(error);
         }
     }
-
+    //Función encargada de cambiar la visión de la contraseña
     const togglePassword = ()=>{
         const passwordInput = document.getElementById('password');
         passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
@@ -43,6 +46,7 @@ export const Login = () => {
     }
     
     return (
+        // Preguntamos si el estado es un objeto vacío
         Object.keys(userAutentication).length === 0 ?
         <main className='singInUpMain'>
             <header>
