@@ -68,7 +68,9 @@ export const CreatePlan = () => {
                 <h3 className='secondTitle'>Ingreso de notas</h3>
                 <Notes setNotes={setNotes} />
             </div>
-            <button className="btnGuardarPlan" onClick={() => saveData()} disabled={Object.keys(enviarPlan).length === 0 || Object.keys(notes).length === 0} >Guardar plan</button>{/**cambia nombre por props */}
+            <div className="containerBtn">
+                <button className="containerBtn__SavePlan" onClick={() => saveData()} disabled={Object.keys(enviarPlan).length === 0 || Object.keys(notes).length === 0} >Guardar plan</button>{/**cambia nombre por props */}
+            </div>
         </>
     );
 };

@@ -8,11 +8,13 @@ import './estilos.sass';
 export const NewPlan = ({setPlan, mode}) => {
     const { register, handleSubmit, setValue } = useForm();
     const [ planInfo, setplanInfo ] = useState({});
+    const [ buttonDisabled, setbuttonDisabled ] = useState(false);
 
     const periodos = ['1', '2'];
     
     const updateDatabase = (data) => {
 		setPlan(data);
+        setbuttonDisabled(true);
     }
 
     useEffect(async () => {
@@ -65,11 +67,11 @@ export const NewPlan = ({setPlan, mode}) => {
                         <fieldset>
                             <div className="newPlan__field">
                                 <label htmlFor="semestre">Semestre</label>
-                                <input input="semestre" id="semestre" type="text" required maxLength={4} {...register("semestre")} />
+                                <input input="semestre" id="semestre" type="text" required disabled={buttonDisabled} maxLength={4} {...register("semestre")} />
                             </div>
                             <div className="newPlan__field">
                                 <label htmlFor="periodo">Periodo</label>
-                                <select name="periodo" id="periodo" required {...register("periodo")} >
+                                <select name="periodo" id="periodo" required disabled={buttonDisabled} {...register("periodo")} >
                                     <option value="">-</option>
                                     {
                                         periodos.map((periodo, index) => <option key={index} >{periodo}</option>)
@@ -78,7 +80,7 @@ export const NewPlan = ({setPlan, mode}) => {
                             </div>
                             <div className="newPlan__field">
                                 <label htmlFor="asignatura">Asignatura</label>
-                                <select name="asignatura" id="asignatura" required {...register("asignatura")} >
+                                <select name="asignatura" id="asignatura" required disabled={buttonDisabled} {...register("asignatura")} >
                                     <option value="">-</option>
                                     {
                                         planInfo.asignaturas.map((asignatura, index) => <option key={index} >{asignatura.nombre}</option>)
@@ -87,7 +89,7 @@ export const NewPlan = ({setPlan, mode}) => {
                             </div>
                             <div className="newPlan__field">
                                 <label htmlFor="grupo">Grupo</label>
-                                <select name="grupo" id="grupo" required {...register("grupo")} >
+                                <select name="grupo" id="grupo" required disabled={buttonDisabled} {...register("grupo")} >
                                     <option value="">-</option>
                                     {
                                         planInfo.grupos.map((grupo, index) => <option key={index} >{grupo.numero}</option>)
@@ -96,7 +98,7 @@ export const NewPlan = ({setPlan, mode}) => {
                             </div>
                             <div className="newPlan__field">
                                 <label htmlFor="docente">Docente</label>
-                                <select name="docente" id="docente" required {...register("docente")} >
+                                <select name="docente" id="docente" required disabled={buttonDisabled} {...register("docente")} >
                                     <option value="">-</option>
                                     {
                                         planInfo.docentes.map((docente, index) => <option key={index} >{docente.nombres + " " + docente.apellidos}</option>)
@@ -105,8 +107,17 @@ export const NewPlan = ({setPlan, mode}) => {
                             </div>
                         </fieldset>
                         <div className="newPlan__buttons">
-                            <input className="newPlan__submitBtn" type="submit" value="Confirmar" />
-                            <input className="newPlan__cancelBtn" type="submit" value="Cancelar" />
+                            <button 
+                                className="newPlan__submitBtn" 
+                                title='Confirmar cambios'
+                                type='submit'
+                                form='newPlan__form'
+                                disabled={buttonDisabled} >Confirmar</button>
+                            <button 
+                                className="newPlan__cancelBtn" 
+                                title='Cancelar cambios' 
+                                disabled={!buttonDisabled}
+                                onClick={() => setbuttonDisabled(false)} >Cancelar</button>
                         </div>
                     </>
                 }

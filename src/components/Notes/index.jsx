@@ -1,10 +1,12 @@
 /** LIBRERIAS */
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 /** ESTILOS */
 import './estilos.sass';
 
 export const Notes = ({setNotes}) => {
+	const [ buttonDisabled, setbuttonDisabled ] = useState(false);
+
 	const Table = useRef(null);
 	let data = [];
 
@@ -13,11 +15,11 @@ export const Notes = ({setNotes}) => {
 		<tr>
 			<td><button class='homework__button--delete' title='Eliminar tarea' id="${Table.current.rows.length}">🪓</button></td>
 			<td>${Table.current.rows.length}</td>
-			<td><input type="text"/></td>
+			<td><input type="text" /></td>
 
-			<td><input type="text"/></td>
-			<td><input type="text"/></td>
-			<td><input type="text"/></td>
+			<td><input type="text" /></td>
+			<td><input type="text" /></td>
+			<td><input type="text" /></td>
 		</tr>
 		`;
 		Table.current.insertRow(-1).innerHTML = row;
@@ -56,24 +58,35 @@ export const Notes = ({setNotes}) => {
 	return (	
 		<section>
 			<div className='container__homeworks'>
-				<table ref={Table} className='homeworks'>
-					<tbody>
-						<tr>
-							<th></th>
-							<th>Nro </th>
-							<th>Nombre </th>
-							<th>Descripción </th>
-							<th>Porcentaje </th>
-							<th>Nota </th>
-						</tr>
-					</tbody>
-				</table>
+				<fieldset disabled={buttonDisabled}>
+					<table ref={Table} className='homeworks' >
+						<tbody>
+							<tr>
+								<th></th>
+								<th>Nro </th>
+								<th>Nombre </th>
+								<th>Descripción </th>
+								<th>Porcentaje </th>
+								<th>Nota </th>
+							</tr>
+						</tbody>
+					</table>
+				</fieldset>
 				<div className='homeworks__btn--new'>
-					<button title='Nueva tarea' onClick={()=>{addHomework()}} >+ Nuevo</button>
+					<button title='Nueva tarea' onClick={()=>{addHomework()}} disabled={buttonDisabled} >+ Nuevo</button>
 				</div>
 			</div>
-			<div className='homeworks__btn--confirm'>
-				<button title='Confirmar cambios' onClick={click ? getPlans(): null}>Confirmar</button>
+			<div className="newPlan__buttons">
+				<button 
+					className="newPlan__submitBtn" 
+					title='Confirmar cambios' 
+					disabled={buttonDisabled}
+					onClick={() => {getPlans(); setbuttonDisabled(true)}} >Confirmar</button>
+				<button 
+					className="newPlan__cancelBtn" 
+					title='Cancelar cambios' 
+					disabled={!buttonDisabled} 
+					onClick={() => setbuttonDisabled(false)} >Cancelar</button>
 			</div>
 		</section>
 	);
