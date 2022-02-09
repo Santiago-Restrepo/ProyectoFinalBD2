@@ -11,7 +11,7 @@ export const Nuevo = () => {
   return (
     <>
       <Notes setNotes={setNotes} click = {click} setClick={() => setClick()}/>
-      <button onClick={()=>{setClick(true)}}>Guardar plan</button>{/**cambia nombre por props */}
+      {/* <button onClick={()=>{setClick(true)}}>Guardar plan</button>*cambia nombre por props */}
     </>
   );
 }
