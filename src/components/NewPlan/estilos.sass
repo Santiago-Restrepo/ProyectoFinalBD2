@@ -8,13 +8,17 @@
     margin-bottom: 1rem
 
 .newPlan
-    background: #F8F8F8
-    border-radius: 1.875rem
+    background: #f0f0f0
+    border-radius: 1.25rem
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
     margin-bottom: 2rem
-    padding: .5rem 1.5rem 1.5rem
+    padding: 1.5rem
+    &__loader
+        font-size: 20px
+        font-style: normal
+        font-weight: 500
+        text-align: center
     &__form
-        position: relative
         fieldset
             border: 0
             display: flex
@@ -25,86 +29,96 @@
                 color: #545454
                 font-weight: 500
                 margin: 1rem 0 .5rem 0
-            input
-                background-color: #F8F8F8
-                border: 0 
+            input, select
+                background-color: #f0f0f0
+                border: none
                 border-bottom: 1px solid #00923F
                 border-top-left-radius: 10px
                 border-top-right-radius: 10px
                 color: #000000
                 font-weight: 100
                 padding: .2rem
-            input[type="text"]:disabled
-                background-color: #eeeeee
-            label, input
-                font-size: 18px
+            input[type="text"]:disabled, select:disabled
+                background-color: #dddddd
+            label, input, select
                 font-style: normal
     &__field
-        align-items: flex-start
+        justify-content: space-between
         display: flex
         flex-direction: column
-    &__pencilBtn
-        background-color: #F8F8F8
-        border: 0
-        cursor: pointer
-        margin-top: 0.5rem
-        position: absolute
-        right: 0
-        top: 0
-        &:hover
-            filter: opacity(.5)
-            transition: all .2s ease
-        img
-            height: 1.5rem
-            width: 1.5rem
     &__buttons
         display: flex
         justify-content: space-evenly
     &__submitBtn
-        background: #00923F
+        border: 2px solid #00923F
+        color: #00923F
         &:hover
-            box-shadow: 0 2px 10px #00923F
-            transition: all .2s ease
+            background: #00923F
+            color: white
+        &:disabled
+            opacity: 0.5
+            cursor: no-drop
     &__cancelBtn
-        background: #dc143c
+        border: 2px solid #dc143c
+        color: #dc143c
         &:hover
-            box-shadow: 0 2px 10px #dc143c
-            transition: all .2s ease
+            background: #dc143c
+            color: white
+        &:disabled
+            opacity: 0.5
+            cursor: no-drop
     &__submitBtn, &__cancelBtn
+        background: #f0f0f0
+        width: 6rem
+        height: 2rem
+        font-size: 0.9rem
+        font-weight: 500
+        border-radius: 20px
+        margin: 1rem 0
+        cursor: pointer
+.containerBtn
+    width: 100%
+    &__SavePlan
+        background: #00923F
         border: 0
         border-radius: 20px
         color: #FFFFFF
         cursor: pointer
-        font-size: 16px
+        display: block
+        font-size: 20px
         font-style: normal
         font-weight: normal
         height: 50px
-        margin-top: 1rem
-        width: 100px
+        margin: 1rem auto 1rem auto
+        width: 200px
+        &:hover
+            box-shadow: 0 2px 10px #00923F
+            transition: all .2s ease
+        &:disabled
+            opacity: 0.5
+            cursor: no-drop
 
 @media screen and ( min-width: 768px )
     .firstTitle, .secondTitle
         font-size: 24px
     .newPlan
-        padding: 0 2rem 2rem
+        padding: 1rem
         &__form
             fieldset
                 label
                     margin: 2rem 0 .5rem 0
-                label, input
+                label, input, select
                     font-size: 20px
-        &__pencilBtn
-            margin-top: 1.5rem
-            img
-                height: 2rem
-                width: 2rem
         &__submitBtn, &__cancelBtn
-            font-size: 20px
-            height: 50px
-            margin-top: 2rem
-            width: 200px
+            font-size: 18px
+            height: 40px
+            margin-top: 1rem
+            width: 150px
 
 @media screen and ( min-width: 1024px )
     .firstTitle, .secondTitle
         font-size: 28px
         margin-bottom: 2rem
+    .newPlan
+        &__submitBtn, &__cancelBtn
+            margin: 2rem 0

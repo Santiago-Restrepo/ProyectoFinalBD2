@@ -3,7 +3,7 @@ export const ScreenDelete = ( { data, setShowDelete } ) => {
     import('./estilos.sass');
 
     const handleClick = () =>{
-        //petición a la bd para eliminar un plan
+        //Petición a la bd para eliminar un plan
         setShowDelete({
             show: false,
             data: ""

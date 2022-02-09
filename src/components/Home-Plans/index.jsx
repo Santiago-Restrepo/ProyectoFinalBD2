@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { ScreenDelete } from '../Delete';
 import { Context } from '../../Context';
+import { Link } from 'react-router-dom';
+
 
 //import data from './data.json';
 
@@ -41,7 +43,7 @@ export const HomePlans = () =>{
                     :<h2 className='TitleEmpty'>Aún no tienes un plan de evaluación</h2>
                 }
             </div>
-                <button className='ButtonAdd'><a href="">+</a></button>     
+                <button className='ButtonAdd'><Link to="/createPlan">+</Link></button>
                 {
                     showDelete.show && <ScreenDelete data={showDelete.data} setShowDelete={setShowDelete}/>
                 }
