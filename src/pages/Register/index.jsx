@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useLayoutEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
@@ -24,17 +24,31 @@ const socialNetworks=[
 ];
 export const Register = () => {
     import('./style.sass')
+
+    //Hooks
+
     const history = useHistory();
     const {userAutentication} = useContext(Context);
     if (Object.keys(userAutentication).length !== 0) {
         history.push('/home')
     }
     const { register, handleSubmit, reset } = useForm();
+
+    //Estado para hacer toggle a la visión de la password
+    const [isPasswordShowed, setIsPasswordShowed] = useState(false);
+
+
+    //Estado para el control de errores
+
+    const [showError, setShowError] = useState(false);
+
     //Estado para controlar la inserción de nuevas redes
     const [selectedNetworks, setSelectedNetworks] = useState([{network: "",username: ""}]);
     const [userRegistered, setUserRegistered] = useState(false);
+
     //Estado encargado de controlar la información sobre la universidad traída de la base de datos
     const [universityInfo, setUniversityInfo] = useState(null);
+
     //Funcion encargada de realizar la inserción de datos de registro en la base de datos
     const postRegisterData = async (data) => {
         /*Conexión con base de datos para guardar lo que haya en data*/
@@ -69,6 +83,20 @@ export const Register = () => {
         event.target.value === 'Otra' ? event.target.nextElementSibling.setAttribute('placeholder', 'Url de la red')
         : event.target.nextElementSibling.setAttribute('placeholder', 'Nombre de usuario')
     }
+
+    const validatePassword = (e)=>{
+        e.target.value === document.getElementById('password').value ? 
+        setShowError(false):
+        setShowError(true)
+    }
+
+    //Función encargada de cambiar la visión de la contraseña
+    const togglePassword = (event)=>{
+        const passwordInput = event.target.previousElementSibling;
+        passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
+        setIsPasswordShowed(!isPasswordShowed);
+    }
+
     //Hook de efecto para recibir la información de la base de datos sql
     useEffect(async ()=>{
         /*Conexión con la base de datos para traer los programas que se encuentran guardados*/
@@ -104,9 +132,22 @@ export const Register = () => {
                         <label htmlFor="email">Correo electrónico</label>
                         <input input="email" type="mail" {...register("email")} required/>
                         <label htmlFor="password">Contraseña</label>
-                        <input id="password" type="password" {...register("password")} required/>
+                        <div className="password">
+                            <input id="password" type="password" {...register("password")} required/>
+                            <button type='button' 
+                            className={isPasswordShowed ? 'unshowed':'showed'} 
+                            onClick={(event)=>{togglePassword(event)}}>
+                            </button>
+                        </div>
                         <label htmlFor="passwordConfirmed">Confirmar contraseña</label>
-                        <input id="passwordConfirmed" type="password" {...register("passwordConfirmed")} required/>
+                        <div className="password">
+                            <input id="passwordConfirmed" onKeyUp={(event) => validatePassword(event)} type="password" {...register("passwordConfirmed")} required/>
+                            <button type='button' 
+                            className={isPasswordShowed ? 'unshowed':'showed'} 
+                            onClick={(event)=>{togglePassword(event)}}>
+                            </button>
+                        </div>
+                        <p className={showError ? 'showError' : 'hideError'}>Las contraseñas no coinciden</p>
                         <label>Redes sociales</label>
                         <div className='socialMedia'>
                             {
