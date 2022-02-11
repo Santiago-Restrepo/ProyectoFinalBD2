@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext, useLayoutEffect} from 'react';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
@@ -6,7 +6,7 @@ import { Context } from '../../Context';
 import { useHistory } from 'react-router-dom';
 
 import logo from '../../assets/logo.svg'
-import './style.sass'
+
 
 const socialNetworks=[
     {
@@ -23,6 +23,7 @@ const socialNetworks=[
     }
 ];
 export const Register = () => {
+    import('./style.sass')
     const history = useHistory();
     const {userAutentication} = useContext(Context);
     if (Object.keys(userAutentication).length !== 0) {
@@ -54,7 +55,7 @@ export const Register = () => {
         reset();
         setUserRegistered(true);
     }
-
+    
     //Función encargada de añadir una nueva red al formulario
     const addNetworkToSelected = ()=>{
         const lastSocialNetworkName = document.querySelector('.socialMedia').lastChild.firstChild.value;
@@ -82,6 +83,7 @@ export const Register = () => {
         )
     },[]);
     
+ 
     return (
         <main className='singInUpMain'>
             <header>

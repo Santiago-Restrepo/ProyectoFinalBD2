@@ -1,7 +1,9 @@
 .singInUpMain
-    padding: 1rem 1rem
+    box-sizing: border-box
+    padding: 1rem
     color: #2c2c2c
     header
+        box-sizing: border-box
         position: absolute
         top: 1rem
         left: 0
@@ -86,11 +88,6 @@
         .submitButton:hover
             background-color: #01882a
 @media screen and (min-width: 1024px)
-    body
-        box-sizing: border-box
-        height: 100vh
-        #app
-            height: 100%
     .singInUpMain
         box-sizing: border-box
         display: grid
@@ -98,6 +95,7 @@
         column-gap: 3rem
         justify-items: center
         align-items: center
+        min-height: 100vh
         height: 100%
         margin: 0 auto
         width: 100%
@@ -108,5 +106,6 @@
         .hero
             margin: 1rem 2rem
         .registerForm
+            z-index: 1 
             label
                 font-size: 1rem
