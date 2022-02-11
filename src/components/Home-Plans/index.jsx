@@ -12,6 +12,7 @@ export const HomePlans = () =>{
     const {userAutentication} = useContext(Context);
     const [data, setData] = useState({plans:"",render:false});
     const [showDelete, setShowDelete] = useState({show:false,datos:""});
+    let s = 0;
     import('./estilos.sass');
 
     const getPlans = async () =>{
@@ -31,13 +32,15 @@ export const HomePlans = () =>{
         } catch (error) {
             console.error(error);
         }
-    }
+    };
+
     useEffect(()=>{
         getPlans();
-    },[])
+    },[]);
+
     useEffect(()=>{
         getPlans();
-    },[data.render === true])
+    },[data.render === true]);
 
     return(
         <> 
@@ -50,7 +53,7 @@ export const HomePlans = () =>{
                         );
                     })
                     : data.render === false ? <h2 className='TitleEmpty'>Aún no tienes un plan de evaluación</h2>
-                    :<h2 className='TitleEmpty'></h2>
+                    :<h2 className='TitleEmpty'>Cargando...</h2>
                 }
             </div>
                 <button className='ButtonAdd'><Link to="/createPlan">+</Link></button>
