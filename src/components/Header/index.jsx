@@ -8,6 +8,8 @@ export const Header = () =>{
     const {userAutentication, setUserAutentication} = useContext(Context);
     import('./estilos.sass');
     const history = useHistory();
+    const name = userAutentication.User.name.split(" ")[0];
+    console.log(name)
 
     const handleExit = () =>{
         localStorage.setItem('userAutentication','{}');
@@ -17,10 +19,10 @@ export const Header = () =>{
     return(
         <header>
                 <img className='ImgLogo' src={logo} alt="Logo del PCJIC" />
-                <h2>Nombre de la app</h2>
+                <h2>Pasé Raspando</h2>
                 <div className="Links">
                     <Link to="/home">Inicio</Link>
-                    <p className="NameProfile">{userAutentication.User.name}</p>
+                    <p className="NameProfile">{name}</p>
                     <button className='Exit' onClick={handleExit}>Salir</button>
                 </div>
         </header>
