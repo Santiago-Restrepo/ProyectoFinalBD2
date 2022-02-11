@@ -10,8 +10,8 @@ import { Plans } from './plans';
 
 export const HomePlans = () =>{
     const {userAutentication} = useContext(Context);
-    const [data, setData] = useState("");
-    const [showDelete, setShowDelete] = useState({show:false,data:""});
+    const [data, setData] = useState({plans:"",render:false});
+    const [showDelete, setShowDelete] = useState({show:false,datos:""});
     import('./estilos.sass');
 
     const getPlans = async () =>{
@@ -24,8 +24,10 @@ export const HomePlans = () =>{
                 method: 'GET'
             });
             const responseJson = await response.json();
-            setData(responseJson.Planes);
-            console.log(responseJson);      
+            setData({
+                plans: responseJson.Planes,
+                render: false
+            });  
         } catch (error) {
             console.error(error);
         }
@@ -33,23 +35,27 @@ export const HomePlans = () =>{
     useEffect(()=>{
         getPlans();
     },[])
+    useEffect(()=>{
+        getPlans();
+    },[data.render === true])
 
     return(
-        <>
+        <> 
             <div className='PlansCards'>
                 {
-                    data.length > 0 ?
-                    data.map((value,index)=>{
+                    data.plans.length > 0 ?
+                    data.plans.map((value,index)=>{
                         return( 
                             <Plans setShowDelete={setShowDelete} value={value} key={`asignatura-${index}`}/>
                         );
                     })
-                    :<h2 className='TitleEmpty'>Aún no tienes un plan de evaluación</h2>
+                    : data.render === false ? <h2 className='TitleEmpty'>Aún no tienes un plan de evaluación</h2>
+                    :<h2 className='TitleEmpty'></h2>
                 }
             </div>
                 <button className='ButtonAdd'><Link to="/createPlan">+</Link></button>
                 {
-                    showDelete.show && <ScreenDelete data={showDelete.data} setShowDelete={setShowDelete}/>
+                    showDelete.show && <ScreenDelete dataShow={showDelete.datos} setShowDelete={setShowDelete} setData={setData}/>
                 }
         </>
     );
