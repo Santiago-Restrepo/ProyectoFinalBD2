@@ -13,16 +13,20 @@ export const HomePlans = () =>{
     import('./estilos.sass');
 
     const getPlans = async () =>{
-        const response = await fetch('https://paseraspandoapi.vercel.app/planes',{
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userAutentication.token}`
-            },
-            method: 'GET'
-        });
-        const responseJson = await response.json();
-        setData(responseJson.Planes);
-        console.log(responseJson);
+        try {
+            const response = await fetch('https://paseraspandoapi.vercel.app/planes',{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userAutentication.token}`
+                },
+                method: 'GET'
+            });
+            const responseJson = await response.json();
+            setData(responseJson.Planes);
+            console.log(responseJson);      
+        } catch (error) {
+            console.error(error);
+        }
     }
     useEffect(()=>{
         getPlans();
