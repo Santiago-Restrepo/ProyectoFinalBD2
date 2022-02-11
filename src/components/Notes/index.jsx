@@ -41,6 +41,7 @@ export const Notes = ({setNotes}) => {
 	}
 
 	const getPlans = ()=>{
+		data.splice(0, data.length);
 		Array.from(Table.current.rows).forEach(function (fila, ind) {
 			if(ind !== 0){
 				let dataRow = {};
@@ -52,7 +53,30 @@ export const Notes = ({setNotes}) => {
 				data.push(dataRow)
 			}
 		});
-		setNotes(data);
+
+		if(data.length != 0){
+			let porcentajes = [];
+			data.map((nota) => {
+				if(nota.porcentaje != '')
+					porcentajes.push(parseInt(nota.porcentaje))});
+			
+			let valorTotalPorcentaje = 0;
+			if(porcentajes.length != 0){
+				valorTotalPorcentaje = porcentajes.reduce((valorAnterior, valorActual) => (valorAnterior + valorActual));
+			}
+
+			if(valorTotalPorcentaje <= 100){
+				setNotes(data);
+				setbuttonDisabled(true);
+				console.log(valorTotalPorcentaje);
+				
+			} else {
+				alert("Ups! Te pasaste del 100% Por favor ingresa los porcentajes correspondientes");
+			}
+	
+		} else {
+			alert("Por favor ingrese alguna nota");
+		}
 	}
 
 	return (	
@@ -66,7 +90,7 @@ export const Notes = ({setNotes}) => {
 								<th>Nro </th>
 								<th>Nombre </th>
 								<th>Descripción </th>
-								<th>Porcentaje </th>
+								<th>Porcentaje (%) </th>
 								<th>Nota </th>
 							</tr>
 						</tbody>
@@ -81,7 +105,7 @@ export const Notes = ({setNotes}) => {
 					className="newPlan__submitBtn" 
 					title='Confirmar cambios' 
 					disabled={buttonDisabled}
-					onClick={() => {getPlans(); setbuttonDisabled(true)}} >Confirmar</button>
+					onClick={() => getPlans()} >Confirmar</button>
 				<button 
 					className="newPlan__cancelBtn" 
 					title='Cancelar cambios' 
