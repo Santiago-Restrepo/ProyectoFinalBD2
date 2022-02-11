@@ -3,10 +3,10 @@ import { Link , useHistory, Redirect } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
-import './style.sass'
 
 export const Login = () => {
-
+    import('./style.sass')
+    import('../Register/style.sass')
     const history = useHistory();
     const {setUserAutentication, userAutentication} = useContext(Context);
 
