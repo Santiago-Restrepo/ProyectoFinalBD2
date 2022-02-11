@@ -9,7 +9,8 @@ import { Recovery } from './pages/Login/Recovery'
 import { ChangePassword } from './pages/Login/ChangePassword'
 import { Home } from './pages/Home'
 import { Profile } from './pages/Profile'
-import { EvaluationPlan } from './pages/EvaluationPlan';
+import { CreatePlan } from './pages/CreatePlan';
+import { ViewPlan } from './pages/ViewPlan';
 import { NotFound } from './pages/NotFound'
 
 /** Estilos globales */
@@ -34,7 +35,8 @@ export const App = () => {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/recovery" component={Recovery} />
                         <Route exact path="/change_password" component={ChangePassword} />
-                        <Route exact path="/evaluation-plan" component={EvaluationPlan} />
+                        <Route exact path="/createPlan" component={CreatePlan} />
+                        <Route exact path="/viewPlan/:id" component={ViewPlan} />
                         <Route exact path="/profile" component={Profile} />
                         <Route path="*" component={NotFound} />
                     </Switch>

@@ -1,5 +1,5 @@
 import React, {useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { Context } from '../../Context';
 
 import logo from '../../assets/logo.svg'
@@ -19,7 +19,7 @@ export const Header = () =>{
                 <img className='ImgLogo' src={logo} alt="Logo del PCJIC" />
                 <h2>Nombre de la app</h2>
                 <div className="Links">
-                    <a href="">Inicio</a>
+                    <Link to="/home">Inicio</Link>
                     <p className="NameProfile">{userAutentication.User.name}</p>
                     <button className='Exit' onClick={handleExit}>Salir</button>
                 </div>

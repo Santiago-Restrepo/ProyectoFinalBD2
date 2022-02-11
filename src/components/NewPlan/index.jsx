@@ -1,75 +1,125 @@
-import React, { useLayoutEffect, useState } from 'react';
+/** LIBRERIAS */
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import lapiz from '../../assets/lapiz.png'
-
+/** ESTILOS */
 import './estilos.sass';
 
-export const NewPlan = () => {
-    const [ editable, setEditable ] = useState(false);
+export const NewPlan = ({setPlan, mode}) => {
     const { register, handleSubmit, setValue } = useForm();
+    const [ planInfo, setplanInfo ] = useState({});
+    const [ buttonDisabled, setbuttonDisabled ] = useState(false);
 
-    const newPlan = {
-        id: '1',
-        semestre: '2021',
-        periodo: '2',
-        grupo: '1',
-        asignatura: 'Bases de datos 2',
-        docente: 'Monica Rojas'
-    }
+    const periodos = ['1', '2'];
     
     const updateDatabase = (data) => {
-        console.log(data);
-        // ACTUALIZAR EN LA BASE DE DATOS
-        setEditable(false);
+		setPlan(data);
+        setbuttonDisabled(true);
     }
-    
-    useLayoutEffect(() => {
-        const setValuesDatabase = (database) => {
-            setValue("semestre", database.semestre);
-            setValue("periodo", database.periodo);
-            setValue("grupo", database.grupo);
-            setValue("asignatura", database.asignatura);
-            setValue("docente", database.docente);
+
+    useEffect(async () => {
+        try {
+            const responseAsignaturas = await fetch('https://paseraspandoapi.vercel.app/asignaturas');
+            const responseJsonAsignaturas = await responseAsignaturas.json();
+            console.log(responseJsonAsignaturas);
+
+            const responseGrupos = await fetch('https://paseraspandoapi.vercel.app/grupos');
+            const responseJsonGrupos = await responseGrupos.json();
+            console.log(responseJsonGrupos);
+            
+            const responseDocentes = await fetch('https://paseraspandoapi.vercel.app/empleados');
+            const responseJsonDocentes = await responseDocentes.json();
+            console.log(responseJsonDocentes);
+
+            setplanInfo({
+                asignaturas: responseJsonAsignaturas.asignaturas,
+                grupos: responseJsonGrupos.grupos,
+                docentes: responseJsonDocentes.empleados
+            });
+
+        } catch (error) {
+            alert("Ha sucedido un error 😫");
         }
-        setValuesDatabase(newPlan);
+    }, []);
+
+    useLayoutEffect(() => {
+        if(mode){
+            const setValuesDatabase = (database) => {
+                setValue("semestre", database.semestre);
+                setValue("periodo", database.periodo);
+                setValue("grupo", database.grupo);
+                setValue("asignatura", database.asignatura);
+                setValue("docente", database.docente);
+            }
+            /** HACER FETCH Y PASAR LOS VALORES DE LA BD CON EL ID QUE VIENE POR URL */
+            // setValuesDatabase(newPlan);
+        }
     });
 
     return (
         <div className='newPlan'>
-            <form className="newPlan__form" onSubmit={handleSubmit(updateDatabase)}>
-                <fieldset>
-                    <div className="newPlan__field">
-                        <label htmlFor="semestre">Semestre</label>
-                        <input input="semestre" id="semestre" type="text" {...register("semestre", {required: true, maxLength: 4})} disabled={!editable} />
-                    </div>
-                    <div className="newPlan__field">
-                        <label htmlFor="periodo">Periodo</label>
-                        <input input="periodo" id="periodo" type="text" {...register("periodo", {required: true, maxLength: 1})} disabled={!editable} />
-                    </div>
-                    <div className="newPlan__field">
-                        <label htmlFor="grupo">Grupo</label>
-                        <input input="grupo" id="grupo" type="text" {...register("grupo", {required: true, maxLength: 1})} disabled={!editable} />
-                    </div>
-                    <div className="newPlan__field">
-                        <label htmlFor="asignatura">Asignatura</label>
-                        <input input="asignatura" id="asignatura" type="text" {...register("asignatura", {required: true, maxLength: 40})} disabled={!editable} />
-                    </div>
-                    <div className="newPlan__field">
-                        <label htmlFor="docente">Docente</label>
-                        <input input="docente" id="docente" type="text" {...register("docente", {required: true, maxLength: 40})} disabled={!editable} />
-                    </div>
-                </fieldset>
+            <form className="newPlan__form" id="newPlan__form" onSubmit={handleSubmit(updateDatabase)}>
                 {
-                    editable ?
-                        <div className='newPlan__buttons'>
-                            <input className="newPlan__submitBtn" type="submit" value="Actualizar" />
-                            <button className="newPlan__cancelBtn" onClick={() => setEditable(false)}>Cancelar</button>
-                        </div>
+                    Object.keys(planInfo).length === 0 ?
+                    <h1 className='newPlan__loader'>...Cargando Información...</h1>
                     :
-                        <button className="newPlan__pencilBtn" onClick={() => setEditable(true)}>
-                            <img src={lapiz} alt="Editar" title='Editar' />
-                        </button>
+                    <>
+                        <fieldset>
+                            <div className="newPlan__field">
+                                <label htmlFor="semestre">Semestre</label>
+                                <input input="semestre" id="semestre" type="text" required disabled={buttonDisabled} maxLength={4} {...register("semestre")} />
+                            </div>
+                            <div className="newPlan__field">
+                                <label htmlFor="periodo">Periodo</label>
+                                <select name="periodo" id="periodo" required disabled={buttonDisabled} {...register("periodo")} >
+                                    <option value="">-</option>
+                                    {
+                                        periodos.map((periodo, index) => <option key={index} >{periodo}</option>)
+                                    }
+                                </select>
+                            </div>
+                            <div className="newPlan__field">
+                                <label htmlFor="asignatura">Asignatura</label>
+                                <select name="asignatura" id="asignatura" required disabled={buttonDisabled} {...register("asignatura")} >
+                                    <option value="">-</option>
+                                    {
+                                        planInfo.asignaturas.map((asignatura, index) => <option key={index} >{asignatura.nombre}</option>)
+                                    }
+                                </select>
+                            </div>
+                            <div className="newPlan__field">
+                                <label htmlFor="grupo">Grupo</label>
+                                <select name="grupo" id="grupo" required disabled={buttonDisabled} {...register("grupo")} >
+                                    <option value="">-</option>
+                                    {
+                                        planInfo.grupos.map((grupo, index) => <option key={index} >{grupo.numero}</option>)
+                                    }
+                                </select>
+                            </div>
+                            <div className="newPlan__field">
+                                <label htmlFor="docente">Docente</label>
+                                <select name="docente" id="docente" required disabled={buttonDisabled} {...register("docente")} >
+                                    <option value="">-</option>
+                                    {
+                                        planInfo.docentes.map((docente, index) => <option key={index} >{docente.nombres + " " + docente.apellidos}</option>)
+                                    }
+                                </select>
+                            </div>
+                        </fieldset>
+                        <div className="newPlan__buttons">
+                            <button 
+                                className="newPlan__submitBtn" 
+                                title='Confirmar cambios'
+                                type='submit'
+                                form='newPlan__form'
+                                disabled={buttonDisabled} >Confirmar</button>
+                            <button 
+                                className="newPlan__cancelBtn" 
+                                title='Cancelar cambios' 
+                                disabled={!buttonDisabled}
+                                onClick={() => setbuttonDisabled(false)} >Cancelar</button>
+                        </div>
+                    </>
                 }
             </form>
         </div>
