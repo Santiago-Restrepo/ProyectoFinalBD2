@@ -3,6 +3,7 @@ import { Link , useHistory, Redirect } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
+import Swal from 'sweetalert2';
 
 export const Login = () => {
     import('../Register/style.sass')
@@ -33,7 +34,22 @@ export const Login = () => {
             setUserAutentication(jsonResponse);
             history.push('/home');
         } catch (error) {
-            alert('Usuario o contraseña incorrectos');
+            let timerInterval
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            html: 'Usuario incorrecto',
+            timer: 4000,
+            timerProgressBar: true,
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+            }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer')
+            }
+        })
             console.error(error);
         }
     }
