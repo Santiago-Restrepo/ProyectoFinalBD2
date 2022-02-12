@@ -13,22 +13,25 @@
     a
         color: #00923F
         display: block
-        margin-top: 2rem
-    .ButtonDelete
-        margin-top: 0rem
-        box-sizing: border-box
+    .ContentButtons
         display: flex
-        justify-content: right
-        button
-            width: 1.5rem
-            height: 1.5rem
-            border-radius: 50%
-            border: none
-            background-color: red
-            opacity: 0.9
-            color: white
-            box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25)
-            cursor: pointer
+        justify-content: space-evenly
+        align-items: center
+        .ButtonDelete
+            margin-top: 0rem
+            box-sizing: border-box
+            display: flex
+            justify-content: right
+            button
+                width: 1.5rem
+                height: 1.5rem
+                border-radius: 50%
+                border: none
+                background-color: red
+                opacity: 0.9
+                color: white
+                box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25)
+                cursor: pointer
 
 @media screen and ( min-width: 768px )// MediaQuery para los dispositivos Tablet
     .Card

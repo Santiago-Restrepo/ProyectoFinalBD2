@@ -44,6 +44,7 @@ export const HomePlans = () =>{
 
     return(
         <> 
+            <h2 className='TitlePlanes'>Planes</h2>
             <div className='PlansCards'>
                 {
                     data.plans.length > 0 ?
