@@ -144,9 +144,9 @@ export const Notes = ({setNotes, mode, desabilitar1, desabilitar2}) => {
 					onClick={() => {getPlans(); desabilitar1(true);}} >Confirmar</button>
 				<button 
 					className="newPlan__cancelBtn" 
-					title='Cancelar cambios' 
+					title='Editar cambios' 
 					disabled={!buttonDisabled} 
-					onClick={() => {setbuttonDisabled(false); desabilitar2(true);}} >Cancelar</button>
+					onClick={() => {setbuttonDisabled(false); desabilitar2(true);}} >Editar</button>
 			</div>
 		</section>
 	);
