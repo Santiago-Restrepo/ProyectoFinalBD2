@@ -49,7 +49,7 @@ export const NewPlan = ({setPlan, mode, desabilitar1, desabilitar2}) => {
                     }
                 });
                 const responseJsonPlanId = await responsePlanId.json();
-                console.log(responseJsonPlanId);
+                // console.log(responseJsonPlanId);
 
                 setValue("semestre", responseJsonPlanId.users[0].semestre);
                 setValue("periodo", responseJsonPlanId.users[0].periodo);

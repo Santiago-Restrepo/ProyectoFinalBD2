@@ -80,7 +80,6 @@ export const ViewPlan = () => {
         let acumulador = 0.0;
 
         responseJsonNotesId.Notas.map((nota) => {
-            debugger
             acumulador += parseFloat(nota.nota === '' ? 0 :nota.nota)*(parseFloat(nota.porcentaje === '' ? 0 :nota.porcentaje)/100);
         });
 
