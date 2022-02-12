@@ -16,10 +16,13 @@ export const CreatePlan = () => {
     const { userAutentication } = useContext(Context);
     Object.keys(userAutentication).length === 0 && history.push('/login');
 
-    const [notes, setNotes] = useState({});//estado para guardar la data entre padre e hijo
-
     const [ enviarPlan, setEnviarPlan ] = useState({});
     
+    const [ notes, setNotes ] = useState([]);//estado para guardar la data entre padre e hijo
+
+    const [ buttonDisabled1, setbuttonDisabled1 ] = useState(false);
+    const [ buttonDisabled2, setbuttonDisabled2 ] = useState(false);
+
     const saveData = async () => {
         try {
             //** ENVIO A LA BASE DE DATOS DEL NEWPLAN */
@@ -33,7 +36,7 @@ export const CreatePlan = () => {
             });
     
             const responseJsonPlan = await responsePlan.json();
-            console.log(responseJsonPlan);
+            // console.log(responseJsonPlan);
 
             const PLAN_ID = responseJsonPlan.newPlan.insertedId;
             
@@ -48,7 +51,7 @@ export const CreatePlan = () => {
             });
     
             const responseJsonNotes = await responseNotes.json();
-            console.log(responseJsonNotes);
+            // console.log(responseJsonNotes);
             
             history.push('/home');
         } catch (error) {
@@ -64,9 +67,9 @@ export const CreatePlan = () => {
             <Header/>
             <div className="plans">
                 <h3 className='firstTitle'>Nuevo plan de evaluación</h3>
-                <NewPlan setPlan={setEnviarPlan} mode={id}/>
+                <NewPlan setPlan={setEnviarPlan} mode={id} desabilitar1={setbuttonDisabled1} desabilitar2={setbuttonDisabled2} />
                 <h3 className='secondTitle'>Ingreso de notas</h3>
-                <Notes setNotes={setNotes} />
+                <Notes setNotes={setNotes} mode={id} desabilitar1={setbuttonDisabled1} desabilitar2={setbuttonDisabled2} />
             </div>
             <div className="containerBtn">
                 <button className="containerBtn__SavePlan" onClick={() => saveData()} disabled={Object.keys(enviarPlan).length === 0 || Object.keys(notes).length === 0} >Guardar plan</button>{/**cambia nombre por props */}

@@ -1,35 +1,39 @@
 /** LIBRERIAS */
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { Context } from '../../Context';
 
 /** ESTILOS */
 import './estilos.sass';
 
-export const NewPlan = ({setPlan, mode}) => {
+export const NewPlan = ({setPlan, mode, desabilitar1, desabilitar2}) => {
     const { register, handleSubmit, setValue } = useForm();
     const [ planInfo, setplanInfo ] = useState({});
     const [ buttonDisabled, setbuttonDisabled ] = useState(false);
+
+    const { userAutentication } = useContext(Context);
 
     const periodos = ['1', '2'];
     
     const updateDatabase = (data) => {
 		setPlan(data);
         setbuttonDisabled(true);
+        desabilitar1(true);
     }
 
     useEffect(async () => {
         try {
             const responseAsignaturas = await fetch('https://paseraspandoapi.vercel.app/asignaturas');
             const responseJsonAsignaturas = await responseAsignaturas.json();
-            console.log(responseJsonAsignaturas);
+            // console.log(responseJsonAsignaturas);
 
             const responseGrupos = await fetch('https://paseraspandoapi.vercel.app/grupos');
             const responseJsonGrupos = await responseGrupos.json();
-            console.log(responseJsonGrupos);
+            // console.log(responseJsonGrupos);
             
             const responseDocentes = await fetch('https://paseraspandoapi.vercel.app/empleados');
             const responseJsonDocentes = await responseDocentes.json();
-            console.log(responseJsonDocentes);
+            // console.log(responseJsonDocentes);
 
             setplanInfo({
                 asignaturas: responseJsonAsignaturas.asignaturas,
@@ -37,24 +41,28 @@ export const NewPlan = ({setPlan, mode}) => {
                 docentes: responseJsonDocentes.empleados
             });
 
+            if(mode){
+                const responsePlanId = await fetch(`https://paseraspandoapi.vercel.app/plan/${mode}`,{
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${userAutentication.token}`
+                    }
+                });
+                const responseJsonPlanId = await responsePlanId.json();
+                console.log(responseJsonPlanId);
+
+                setValue("semestre", responseJsonPlanId.users[0].semestre);
+                setValue("periodo", responseJsonPlanId.users[0].periodo);
+                setValue("asignatura", responseJsonPlanId.users[0].asignatura);
+                setValue("grupo", responseJsonPlanId.users[0].grupo);
+                setValue("docente", responseJsonPlanId.users[0].docente);
+                setbuttonDisabled(true);
+            }
         } catch (error) {
             alert("Ha sucedido un error 😫");
         }
+        
     }, []);
-
-    useLayoutEffect(() => {
-        if(mode){
-            const setValuesDatabase = (database) => {
-                setValue("semestre", database.semestre);
-                setValue("periodo", database.periodo);
-                setValue("grupo", database.grupo);
-                setValue("asignatura", database.asignatura);
-                setValue("docente", database.docente);
-            }
-            /** HACER FETCH Y PASAR LOS VALORES DE LA BD CON EL ID QUE VIENE POR URL */
-            // setValuesDatabase(newPlan);
-        }
-    });
 
     return (
         <div className='newPlan'>
@@ -117,7 +125,7 @@ export const NewPlan = ({setPlan, mode}) => {
                                 className="newPlan__cancelBtn" 
                                 title='Cancelar cambios' 
                                 disabled={!buttonDisabled}
-                                onClick={() => setbuttonDisabled(false)} >Cancelar</button>
+                                onClick={() => {setbuttonDisabled(false); desabilitar2(true);}} >Cancelar</button>
                         </div>
                     </>
                 }

@@ -35,7 +35,7 @@ export const ChangePassword = () => {
         //     setUserAutentication(jsonResponse);
             
         //     history.push('/home')
-                console.log(data);
+                // console.log(data);
             
         } catch (error) {
             alert('Usuario o contraseña incorrectos')

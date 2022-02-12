@@ -1,11 +1,15 @@
 /** LIBRERIAS */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { Context } from '../../Context';
 
 /** ESTILOS */
 import './estilos.sass';
 
-export const Notes = ({setNotes}) => {
+export const Notes = ({setNotes, mode, desabilitar1, desabilitar2}) => {
 	const [ buttonDisabled, setbuttonDisabled ] = useState(false);
+	const [ renderNotes, setrenderNotes ] = useState([]);
+
+	const { userAutentication } = useContext(Context);
 
 	const Table = useRef(null);
 	let data = [];
@@ -68,16 +72,32 @@ export const Notes = ({setNotes}) => {
 			if(valorTotalPorcentaje <= 100){
 				setNotes(data);
 				setbuttonDisabled(true);
-				console.log(valorTotalPorcentaje);
-				
 			} else {
 				alert("Ups! Te pasaste del 100% Por favor ingresa los porcentajes correspondientes");
 			}
-	
 		} else {
 			alert("Por favor ingrese alguna nota");
 		}
 	}
+	
+	useEffect(async () => {
+		if(mode){
+			/** CUANDO ESTEMOS EN LA PANTALLA VIEWPLAN */
+			/** HACER FETCH Y PASAR LOS VALORES DE LA BD CON EL ID QUE VIENE POR URL */
+
+			const responseNotesId = await fetch(`https://paseraspandoapi.vercel.app/notes/${mode}`,{
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${userAutentication.token}`
+				}
+			});
+
+			const responseJsonNotesId = await responseNotesId.json();
+			// console.log(responseJsonNotesId);
+			setrenderNotes(responseJsonNotesId.Notas);
+			setbuttonDisabled(true);
+        }
+    }, []);
 
 	return (	
 		<section>
@@ -93,6 +113,22 @@ export const Notes = ({setNotes}) => {
 								<th>Porcentaje (%) </th>
 								<th>Nota </th>
 							</tr>
+							{
+								renderNotes.length !== 0 && renderNotes.map((nota, index) => (
+									<tr key={index}>
+										<td><button 
+											className='homework__button--delete' 
+											title='Eliminar tarea' 
+											id={index+1}
+											onClick={(e) => deleteItem(e.target.id)}>🪓</button></td>
+										<td>{index+1}</td>
+										<td><input type="text" defaultValue={nota.nombre} /></td>
+										<td><input type="text" defaultValue={nota.descripcion} /></td>
+										<td><input type="text" defaultValue={nota.porcentaje} /></td>
+										<td><input type="text" defaultValue={nota.nota} /></td>
+									</tr>	
+								))
+							}
 						</tbody>
 					</table>
 				</fieldset>
@@ -105,12 +141,12 @@ export const Notes = ({setNotes}) => {
 					className="newPlan__submitBtn" 
 					title='Confirmar cambios' 
 					disabled={buttonDisabled}
-					onClick={() => getPlans()} >Confirmar</button>
+					onClick={() => {getPlans(); desabilitar1(true);}} >Confirmar</button>
 				<button 
 					className="newPlan__cancelBtn" 
 					title='Cancelar cambios' 
 					disabled={!buttonDisabled} 
-					onClick={() => setbuttonDisabled(false)} >Cancelar</button>
+					onClick={() => {setbuttonDisabled(false); desabilitar2(true);}} >Cancelar</button>
 			</div>
 		</section>
 	);
