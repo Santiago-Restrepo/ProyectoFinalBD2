@@ -9,7 +9,6 @@ export const Header = () =>{
     import('./estilos.sass');
     const history = useHistory();
     const name = userAutentication.User.name.split(" ")[0];
-    // console.log(name)
 
     const handleExit = () =>{
         localStorage.setItem('userAutentication','{}');
@@ -17,7 +16,7 @@ export const Header = () =>{
         history.push('/login');
     }
     return(
-        <header>
+        <header className='header'>
                 <img className='ImgLogo' src={logo} alt="Logo del PCJIC" />
                 <h2>Pasé Raspando</h2>
                 <div className="Links">
