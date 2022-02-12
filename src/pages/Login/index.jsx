@@ -5,7 +5,6 @@ import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
 
 export const Login = () => {
-    import('./style.sass')
     import('../Register/style.sass')
     const history = useHistory();
     const {setUserAutentication, userAutentication} = useContext(Context);
@@ -39,8 +38,8 @@ export const Login = () => {
         }
     }
     //Función encargada de cambiar la visión de la contraseña
-    const togglePassword = ()=>{
-        const passwordInput = document.getElementById('password');
+    const togglePassword = (event)=>{
+        const passwordInput = event.target.previousElementSibling;
         passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
         setIsPasswordShowed(!isPasswordShowed);
     }
@@ -66,7 +65,7 @@ export const Login = () => {
                         <input {...register("password")} id="password" type="password" required/>
                         <button type='button' 
                         className={isPasswordShowed ? 'unshowed':'showed'} 
-                        onClick={togglePassword}>
+                        onClick={(event)=> togglePassword(event)}>
                         </button>
                     </div>
                     <input className='submitButton' type='submit' value="Iniciar sesión"/>
