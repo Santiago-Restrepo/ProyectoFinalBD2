@@ -5,6 +5,8 @@ import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
 import Swal from 'sweetalert2';
 
+import { HeaderLogin } from '../../components/Header/LoginHeader';
+
 export const Login = () => {
     import('../Register/style.sass')
     const history = useHistory();
@@ -63,30 +65,31 @@ export const Login = () => {
     return (
         // Preguntamos si el estado es un objeto vacío
         Object.keys(userAutentication).length === 0 ?
-        <main className='singInUpMain'>
-            <header>
-                <img src={logo} alt="" />
-            </header>
-            <section className='hero'>
-                <h1>PaséRaspando</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
-            </section>
-                <form className="registerForm" onSubmit={handleSubmit(postLoginData)}>
-                    <h1>Ingresa ahora</h1>
-                    <p>¿No tienes una cuenta? <Link to="/">Regístrate</Link></p>
-                    <label htmlFor="email">Correo electrónico</label>
-                    <input input="email" type="mail" {...register("email")} required/>
-                    <label htmlFor="password">Contraseña</label>
-                    <div className="password">
-                        <input {...register("password")} id="password" type="password" required/>
-                        <button type='button' 
-                        className={isPasswordShowed ? 'unshowed':'showed'} 
-                        onClick={(event)=> togglePassword(event)}>
-                        </button>
-                    </div>
-                    <input className='submitButton' type='submit' value="Iniciar sesión"/>
-                    <Link to="/">¿No recuerdas tu contraseña?</Link>
-                </form>
-        </main> : <Redirect to="/home" />
+        <>
+            <HeaderLogin />
+            <main className='singInUpMain'>
+                <section className='hero'>
+                    <h1>PaséRaspando</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
+                </section>
+                    <form className="registerForm" onSubmit={handleSubmit(postLoginData)}>
+                        <h1>Ingresa ahora</h1>
+                        <p>¿No tienes una cuenta? <Link to="/">Regístrate</Link></p>
+                        <label htmlFor="email">Correo electrónico</label>
+                        <input input="email" type="mail" {...register("email")} required/>
+                        <label htmlFor="password">Contraseña</label>
+                        <div className="password">
+                            <input {...register("password")} id="password" type="password" required/>
+                            <button type='button' 
+                            className={isPasswordShowed ? 'unshowed':'showed'} 
+                            onClick={(event)=> togglePassword(event)}>
+                            </button>
+                        </div>
+                        <input className='submitButton' type='submit' value="Iniciar sesión"/>
+                        <Link to="/recovery">¿No recuerdas tu contraseña?</Link>
+                    </form>
+            </main>
+        </>
+        : <Redirect to="/home" />
     );
 }
