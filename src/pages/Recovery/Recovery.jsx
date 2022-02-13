@@ -11,7 +11,7 @@ import ImageMain from '../../assets/undraw_forgot_password_re_hxwm 1.png';
 
 export const Recovery = () => {
 
-    import('./styles.sass');
+    import('../Register/style.sass');
 
     const history = useHistory();
     const { register, handleSubmit } = useForm();
@@ -37,7 +37,7 @@ export const Recovery = () => {
             console.error(error)
         }
     }
-    
+
     return (
         <>
             <Helmet>

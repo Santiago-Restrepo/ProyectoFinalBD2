@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, {useState} from 'react'; 
 import { Helmet } from 'react-helmet';
 import { useHistory, Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
@@ -8,16 +8,19 @@ import ImageMain from '../../assets/undraw_authentication_re_svpt 1.png';
 
 export const ChangePassword = () => {
 
-    import('./styles.sass');
+    import('../Register/style.sass');
     let TokenRecovery = location.href.split('=')[1];
 
     const history = useHistory();
     const { register, handleSubmit } = useForm();
-
+    const [isPasswordShowed, setIsPasswordShowed] = useState(false);
+    const togglePassword = (event)=>{
+        const passwordInput = event.target.previousElementSibling;
+        passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
+        setIsPasswordShowed(!isPasswordShowed);
+    }
     const queryDatabase = async (data) => {
-
         console.log(data);
-
         /* Consulta a la base de datos */
         try {
             const response = await fetch('https://paseraspandoapi.vercel.app/change-password',{
@@ -58,9 +61,21 @@ export const ChangePassword = () => {
                         <h1>Restablecer contraseña</h1>
                         <Link to="/login">Iniciar sesión</Link>
                         <label htmlFor="email">Nueva contraseña:</label>
-                        <input id="password" type="password" {...register("password")}/>
+                        <div className="password">
+                            <input id="password" type="password" {...register("password")} required/>
+                            <button type='button' 
+                            className={isPasswordShowed ? 'unshowed':'showed'} 
+                            onClick={(event)=>{togglePassword(event)}}>
+                            </button>
+                        </div>
                         <label htmlFor="password">Confirmar nueva contraseña:</label>
-                        <input id="confirm_password" type="password" {...register("confirm_password")}/>
+                        <div className="password">
+                            <input id="confirm_password" type="password" {...register("confirm_password")}/>
+                            <button type='button' 
+                            className={isPasswordShowed ? 'unshowed':'showed'} 
+                            onClick={(event)=>{togglePassword(event)}}>
+                            </button>
+                        </div>
                         <input className='submitButton' type='submit' value="Restablecer"/>
                     </form>
                 </>
