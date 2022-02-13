@@ -1,5 +1,38 @@
 .containerBtn
     display: flex
-    justify-content: space-evenly
-.btnActualizarPlan
-.btnReporte
+    justify-content: flex-end
+    padding: 0 2rem
+    box-sizing: border-box
+    .btnActualizarPlan, .btnReporte
+        border-radius: 20px
+        border: none
+        cursor: pointer
+    .btnActualizarPlan:disabled,
+    .btnReporte:disabled
+        opacity: 0.5
+        cursor: no-drop
+    .btnActualizarPlan
+        background: #00923F
+        color: white
+    .btnActualizarPlan:hover
+        box-shadow: 0 2px 10px #00923F
+        transition: all .2s ease
+    .btnReporte
+        background: #E8C63E
+        color: black
+    .btnReporte:hover
+        box-shadow: 0 2px 10px #E8C63E
+        transition: all .2s ease
+
+@media screen and ( min-width: 768px )
+.containerBtn
+    .btnActualizarPlan, .btnReporte
+        font-size: 18px
+        height: 40px
+        margin-top: 1rem
+        width: 200px
+
+@media screen and ( min-width: 1024px )
+.containerBtn
+    .btnActualizarPlan, .btnReporte
+        margin: 2rem 0.5rem
