@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
+import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
@@ -113,84 +114,90 @@ export const Register = () => {
     
  
     return (
-        <main className='singInUpMain'>
-            <header>
-                <img src={logo} alt="" />
-            </header>
-            <section className='hero'>
-                <h1>PaséRaspando</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
-            </section>
-            {
-                // Preguntamos si un usuario ya se registró para que si se cumple la condición lo redirigamos al Login
-                !userRegistered ?
-                <form className="registerForm" onSubmit={handleSubmit(postRegisterData)}>
-                        <h1>Regístrate ahora</h1>
-                        <p>¿Ya tienes una cuenta? <Link to="/login">Ingresa</Link></p>
-                        <label htmlFor="fullName">Nombre completo</label>
-                        <input id="fullName" {...register("name")} required/>
-                        <label htmlFor="email">Correo electrónico</label>
-                        <input input="email" type="mail" {...register("email")} required/>
-                        <label htmlFor="password">Contraseña</label>
-                        <div className="password">
-                            <input id="password" type="password" {...register("password")} required/>
-                            <button type='button' 
-                            className={isPasswordShowed ? 'unshowed':'showed'} 
-                            onClick={(event)=>{togglePassword(event)}}>
-                            </button>
-                        </div>
-                        <label htmlFor="passwordConfirmed">Confirmar contraseña</label>
-                        <div className="password">
-                            <input id="passwordConfirmed" onKeyUp={(event) => validatePassword(event)} type="password" {...register("passwordConfirmed")} required/>
-                            <button type='button' 
-                            className={isPasswordShowed ? 'unshowed':'showed'} 
-                            onClick={(event)=>{togglePassword(event)}}>
-                            </button>
-                        </div>
-                        <p className={showError ? 'showError' : 'hideError'}>Las contraseñas no coinciden</p>
-                        <label>Redes sociales</label>
-                        <div className='socialMedia'>
+        <>
+            <Helmet>
+                <title>Pasé Raspando - Registrate</title>
+                <meta name="description" content="Registrate en Pasé raspando" />
+            </Helmet>
+            <main className='singInUpMain'>
+                <header>
+                    <img src={logo} alt="" />
+                </header>
+                <section className='hero'>
+                    <h1>PaséRaspando</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
+                </section>
+                {
+                    // Preguntamos si un usuario ya se registró para que si se cumple la condición lo redirigamos al Login
+                    !userRegistered ?
+                    <form className="registerForm" onSubmit={handleSubmit(postRegisterData)}>
+                            <h1>Regístrate ahora</h1>
+                            <p>¿Ya tienes una cuenta? <Link to="/login">Ingresa</Link></p>
+                            <label htmlFor="fullName">Nombre completo</label>
+                            <input id="fullName" {...register("name")} required/>
+                            <label htmlFor="email">Correo electrónico</label>
+                            <input input="email" type="mail" {...register("email")} required/>
+                            <label htmlFor="password">Contraseña</label>
+                            <div className="password">
+                                <input id="password" type="password" {...register("password")} required/>
+                                <button type='button' 
+                                className={isPasswordShowed ? 'unshowed':'showed'} 
+                                onClick={(event)=>{togglePassword(event)}}>
+                                </button>
+                            </div>
+                            <label htmlFor="passwordConfirmed">Confirmar contraseña</label>
+                            <div className="password">
+                                <input id="passwordConfirmed" onKeyUp={(event) => validatePassword(event)} type="password" {...register("passwordConfirmed")} required/>
+                                <button type='button' 
+                                className={isPasswordShowed ? 'unshowed':'showed'} 
+                                onClick={(event)=>{togglePassword(event)}}>
+                                </button>
+                            </div>
+                            <p className={showError ? 'showError' : 'hideError'}>Las contraseñas no coinciden</p>
+                            <label>Redes sociales</label>
+                            <div className='socialMedia'>
+                                {
+                                    selectedNetworks.map((network,index) =>{
+                                        return (
+                                        <div className='socialMediaContainer' key={`container${index}`}>                                            
+                                            <select {...register(`socialNetworks.${index}.name`)} className='socialMedia' key={`socialNetwork${index}`} onChange={(event)=>changePlaceholder(event)} required>
+                                                {
+                                                    socialNetworks.map(socialNetwork => <option key={`Social Network ${socialNetwork.name}`}>{socialNetwork.name}</option>)
+                                                }
+                                            </select>
+                                            <input {...register(`socialNetworks.${index}.userName`)} type="text" placeholder='Nombre de usuario' key={`networkUsername${index}`} defaultValue={network.username} />                                            
+                                        </div>)
+                                    })
+                                }
+                            </div>
+                            <input type="button" className="addNetwork" onClick={()=>{addNetworkToSelected()}} value='Añadir otra red social'/>
                             {
-                                selectedNetworks.map((network,index) =>{
-                                    return (
-                                    <div className='socialMediaContainer' key={`container${index}`}>                                            
-                                        <select {...register(`socialNetworks.${index}.name`)} className='socialMedia' key={`socialNetwork${index}`} onChange={(event)=>changePlaceholder(event)} required>
-                                            {
-                                                socialNetworks.map(socialNetwork => <option key={`Social Network ${socialNetwork.name}`}>{socialNetwork.name}</option>)
-                                            }
-                                        </select>
-                                        <input {...register(`socialNetworks.${index}.userName`)} type="text" placeholder='Nombre de usuario' key={`networkUsername${index}`} defaultValue={network.username} />                                            
-                                    </div>)
-                                })
+                                universityInfo ?
+                                <>
+                                    <label htmlFor="">Programa académico</label>
+                                    <select {...register('universityProgram')} required>
+                                        {
+                                            universityInfo.programs.map((program, index)=>{
+                                                return <option value={program.nombre} key={`program ${index}`}>{program.nombre}</option>
+                                            })
+                                        }
+                                    </select>
+                                    <label htmlFor="">Sede</label>
+                                    <select {...register('campus')} required>
+                                        {
+                                            universityInfo.campus.map((campus, index)=>{
+                                                return <option value={campus.nombre} key={`campus ${index}`}>{campus.nombre}</option>
+                                            })
+                                        }
+                                    </select>
+                                </>
+                                : <h1>Loading...</h1>
                             }
-                        </div>
-                        <input type="button" className="addNetwork" onClick={()=>{addNetworkToSelected()}} value='Añadir otra red social'/>
-                        {
-                            universityInfo ?
-                            <>
-                                <label htmlFor="">Programa académico</label>
-                                <select {...register('universityProgram')} required>
-                                    {
-                                        universityInfo.programs.map((program, index)=>{
-                                            return <option value={program.nombre} key={`program ${index}`}>{program.nombre}</option>
-                                        })
-                                    }
-                                </select>
-                                <label htmlFor="">Sede</label>
-                                <select {...register('campus')} required>
-                                    {
-                                        universityInfo.campus.map((campus, index)=>{
-                                            return <option value={campus.nombre} key={`campus ${index}`}>{campus.nombre}</option>
-                                        })
-                                    }
-                                </select>
-                            </>
-                            : <h1>Loading...</h1>
-                        }
-                        <input className="submitButton" type="submit" value='Registrarse'/>
-                </form>
-                : <Redirect to="/login"/>
-            }
-        </main>
+                            <input className="submitButton" type="submit" value='Registrarse'/>
+                    </form>
+                    : <Redirect to="/login"/>
+                }
+            </main>
+        </>
     );
 }

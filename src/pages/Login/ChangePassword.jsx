@@ -44,25 +44,31 @@ export const ChangePassword = () => {
     }
     
     return (
-        <main className='singInUpMain'>
-            <header>
-                <img src={logo} alt="" />
-            </header>
-            <section className='hero'>
-                <h1>Nombre de la app</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
-            </section>
-            <>
-                <form className="registerForm" onSubmit={handleSubmit(queryDatabase)}>
-                    <h1>Restablecer contraseña</h1>
-                    <Link to="/login">¿Ya recordaste tu contraseña?</Link>
-                    <label htmlFor="email">Nueva contraseña:</label>
-                    <input id="confirm_password" type="password"/>
-                    <label htmlFor="password">Validar contraseña</label>
-                    <input id="confirm_password" type="password"/>
-                    <input className='submitButton' type='submit' value="Guardar"/>
-                </form>
-            </>
-        </main>
+        <>
+            <Helmet>
+                <title>Pasé Raspando - Restablecer contraseña</title>
+                <meta name="description" content="Restablece tu contraseña" />
+            </Helmet>
+            <main className='singInUpMain'>
+                <header>
+                    <img src={logo} alt="" />
+                </header>
+                <section className='hero'>
+                    <h1>Nombre de la app</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
+                </section>
+                <>
+                    <form className="registerForm" onSubmit={handleSubmit(queryDatabase)}>
+                        <h1>Restablecer contraseña</h1>
+                        <Link to="/login">¿Ya recordaste tu contraseña?</Link>
+                        <label htmlFor="email">Nueva contraseña:</label>
+                        <input id="confirm_password" type="password"/>
+                        <label htmlFor="password">Validar contraseña</label>
+                        <input id="confirm_password" type="password"/>
+                        <input className='submitButton' type='submit' value="Guardar"/>
+                    </form>
+                </>
+            </main>
+        </>
     );
 }

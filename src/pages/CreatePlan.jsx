@@ -1,5 +1,6 @@
 /** LIBRERIAS */
 import React, { useContext, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useHistory, useParams } from 'react-router-dom';
 
 /** COMPONENTES */
@@ -64,6 +65,10 @@ export const CreatePlan = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Crear plan - Pasé Raspando</title>
+                <meta name="description" content="Crear un nuevo plan de estudios" />
+            </Helmet>
             <Header/>
             <div className="plans">
                 <h3 className='firstTitle'>Nuevo plan de evaluación</h3>
