@@ -6,6 +6,8 @@ import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
 import Swal from 'sweetalert2';
 
+import { HeaderLogin } from '../../components/Header/LoginHeader';
+
 export const Login = () => {
     import('../Register/style.sass')
     const history = useHistory();
@@ -91,7 +93,7 @@ export const Login = () => {
                             </button>
                         </div>
                         <input className='submitButton' type='submit' value="Iniciar sesión"/>
-                        <Link to="/">¿No recuerdas tu contraseña?</Link>
+                        <Link to="/recovery">¿No recuerdas tu contraseña?</Link>
                     </form>
             </main>
         </> : <Redirect to="/home" />

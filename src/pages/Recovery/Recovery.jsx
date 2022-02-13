@@ -1,16 +1,20 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
-import { Link , Redirect, useHistory} from 'react-router-dom';
+import { Link , useHistory} from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import logo from '../../assets/logo.svg'
-import { Context } from '../../Context';
+
+import { HeaderLogin } from '../../components/Header/LoginHeader';
+
+// Assets
+import logo from '../../assets/logo.svg';
+import ImageMain from '../../assets/undraw_forgot_password_re_hxwm 1.png';
 
 export const Recovery = () => {
 
+    import('./styles.sass');
+
     const history = useHistory();
-    const {setUserAutentication} = useContext(Context);
-    const { register, handleSubmit, reset } = useForm();
-    const [userLogged, setUserLogged] = useState(false);
+    const { register, handleSubmit } = useForm();
     const queryDatabase = async (data) => {
         /*Consulta a la base de datos*/
         try {
@@ -26,7 +30,6 @@ export const Recovery = () => {
             });
     
             const jsonResponse = await response.json();
-            alert(jsonResponse.message);
             history.push('/login')
             
         } catch (error) {
@@ -41,13 +44,12 @@ export const Recovery = () => {
                 <title>Pasé Raspando - Recuperar contraseña</title>
                 <meta name="description" content="Recupera tu contraseña" />
             </Helmet>
+            <HeaderLogin />
             <main className='singInUpMain'>
-                <header>
-                    <img src={logo} alt="" />
-                </header>
                 <section className='hero'>
-                    <h1>Nombre de la app</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
+                    <h1>Pasé Raspando  📝</h1>
+                    <p>¡No te preocupes, solo revisa tu correo!</p>
+                    <img src={ImageMain} alt="Imagen alusiva a la recuperación de contraseñas" />
                 </section>
                 <>
                     <form className="registerForm" onSubmit={handleSubmit(queryDatabase)}>
@@ -56,8 +58,6 @@ export const Recovery = () => {
                         <label htmlFor="email">Correo electrónico</label>
                         <input input="email" type="mail" {...register("email")} />
                         <input className='submitButton' type='submit' value="Recuperar"/>
-                        <Link to="/login">¿Ya recordaste tu contraseña?</Link>
-                        <Link to="/change_password/55">Prueba</Link>
                     </form>
                 </>
             </main>
