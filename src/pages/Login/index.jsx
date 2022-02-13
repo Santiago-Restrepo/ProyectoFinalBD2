@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { HeaderLogin } from '../../components/Header/LoginHeader';
 import { Link , useHistory, Redirect } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
+import loginImage from '../../assets/login.png'
 import Swal from 'sweetalert2';
-
-import { HeaderLogin } from '../../components/Header/LoginHeader';
 
 export const Login = () => {
     import('../Register/style.sass')
@@ -41,18 +41,13 @@ export const Login = () => {
             Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            html: 'Usuario incorrecto',
-            timer: 4000,
+            html: 'Usuario o contraseña incorrectos',
+            timer: 3000,
             timerProgressBar: true,
             willClose: () => {
                 clearInterval(timerInterval)
             }
-            }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-                console.log('I was closed by the timer')
-            }
-        })
+            })
             console.error(error);
         }
     }
@@ -71,13 +66,12 @@ export const Login = () => {
                 <title>Pasé Raspando- Inicia sesión</title>
                 <meta name="description" content="Inicia sesión en Pasé Raspando" />
             </Helmet>
+            <HeaderLogin/>
             <main className='singInUpMain'>
-                <header>
-                    <img src={logo} alt="" />
-                </header>
                 <section className='hero'>
-                    <h1>PaséRaspando</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
+                    <h1>Pasé Raspando</h1>
+                    <p>¡Que bueno volver a verte!</p>
+                    <img src={loginImage} alt="Imagen de un hombre entrando por una puerta" />
                 </section>
                     <form className="registerForm" onSubmit={handleSubmit(postLoginData)}>
                         <h1>Ingresa ahora</h1>
