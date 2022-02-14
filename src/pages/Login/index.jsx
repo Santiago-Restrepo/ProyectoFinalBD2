@@ -5,6 +5,8 @@ import { Link , useHistory, Redirect } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
+import { AiFillEye , AiFillEyeInvisible} from 'react-icons/ai';
+
 import loginImage from '../../assets/login.png'
 
 /** ALERTS */
@@ -59,7 +61,7 @@ export const Login = () => {
     }
     //Función encargada de cambiar la visión de la contraseña
     const togglePassword = (event)=>{
-        const passwordInput = event.target.previousElementSibling;
+        const passwordInput = event.target.parentElement.previousElementSibling || event.target.parentElement.parentElement.previousElementSibling;
         passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
         setIsPasswordShowed(!isPasswordShowed);
     }
@@ -87,10 +89,16 @@ export const Login = () => {
                         <label htmlFor="password">Contraseña</label>
                         <div className="password">
                             <input {...register("password")} id="password" type="password" required/>
+                            {isPasswordShowed ?
                             <button type='button' 
-                            className={isPasswordShowed ? 'unshowed':'showed'} 
-                            onClick={(event)=> togglePassword(event)}>
+                            onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEyeInvisible />   
+                            </button>:
+                            <button type='button' 
+                            onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEye />   
                             </button>
+                            }
                         </div>
                         <input className='submitButton' type='submit' value="Iniciar sesión"/>
                         <Link to="/recovery">¿No recuerdas tu contraseña?</Link>

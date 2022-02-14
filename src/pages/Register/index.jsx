@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { Context } from '../../Context';
 import { useHistory } from 'react-router-dom';
+import { AiFillEye , AiFillEyeInvisible} from 'react-icons/ai';
 import registerImage from '../../assets/register.png'
 
 /** ALERTS */
@@ -103,7 +104,7 @@ export const Register = () => {
     }
     //Función encargada de cambiar la visión de la contraseña
     const togglePassword = (event)=>{
-        const passwordInput = event.target.previousElementSibling;
+        const passwordInput = event.target.parentElement.previousElementSibling || event.target.parentElement.parentElement.previousElementSibling ;
         passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
         setIsPasswordShowed(!isPasswordShowed);
     }
@@ -165,18 +166,30 @@ export const Register = () => {
                         <label htmlFor="password">Contraseña</label>
                         <div className="password">
                             <input id="password" type="password" {...register("password")} required/>
+                            {isPasswordShowed ?
                             <button type='button' 
-                            className={isPasswordShowed ? 'unshowed':'showed'} 
                             onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEyeInvisible />   
+                            </button>:
+                            <button type='button' 
+                            onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEye />   
                             </button>
+                            }
                         </div>
                         <label htmlFor="passwordConfirmed">Confirmar contraseña</label>
                         <div className="password">
                             <input id="passwordConfirmed" onKeyUp={(event) => validatePassword(event)} type="password" {...register("passwordConfirmed")} required/>
+                            {isPasswordShowed ?
                             <button type='button' 
-                            className={isPasswordShowed ? 'unshowed':'showed'} 
                             onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEyeInvisible />   
+                            </button>:
+                            <button type='button' 
+                            onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEye />   
                             </button>
+                            }
                         </div>
                         <p className={showError ? 'showError' : 'hideError'}>Las contraseñas no coinciden</p>
                         <label>Redes sociales</label>
