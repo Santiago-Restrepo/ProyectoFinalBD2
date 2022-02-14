@@ -6,7 +6,11 @@ import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { Context } from '../../Context';
 import { useHistory } from 'react-router-dom';
+import { AiFillEye , AiFillEyeInvisible} from 'react-icons/ai';
 import registerImage from '../../assets/register.png'
+
+/** ALERTS */
+import Swal from 'sweetalert2';
 
 import logo from '../../assets/logo.svg'
 const socialNetworks=[
@@ -44,22 +48,41 @@ export const Register = () => {
     //Funcion encargada de realizar la inserción de datos de registro en la base de datos
     const postRegisterData = async (data) => {
         /*Conexión con base de datos para guardar lo que haya en data*/
-        const response = await fetch('https://paseraspandoapi.vercel.app/new_user',{
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                name: data.name,
-                email: data.email,
-                password: data.password,
-                network: data.socialNetworks,
-                program: data.universityProgram,
-                sede: data.campus
+        try {
+            const response = await fetch('https://paseraspandoapi.vercel.app/new_user',{
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    name: data.name,
+                    email: data.email,
+                    password: data.password,
+                    network: data.socialNetworks,
+                    program: data.universityProgram,
+                    sede: data.campus
+                })
             })
-        })
-        reset();
-        setUserRegistered(true);
+            reset();
+            setUserRegistered(true);
+        } catch (error) {
+            console.error(error);
+            /** ERROR */
+            let timerInterval
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Ha sucedido un error 😫',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
+        }
     }
     //Función encargada de añadir una nueva red al formulario
     const addNetworkToSelected = ()=>{
@@ -81,34 +104,53 @@ export const Register = () => {
     }
     //Función encargada de cambiar la visión de la contraseña
     const togglePassword = (event)=>{
-        const passwordInput = event.target.previousElementSibling;
+        const passwordInput = event.target.parentElement.previousElementSibling || event.target.parentElement.parentElement.previousElementSibling ;
         passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
         setIsPasswordShowed(!isPasswordShowed);
     }
     //Hook de efecto para recibir la información de la base de datos sql
     useEffect(async ()=>{
         /*Conexión con la base de datos para traer los programas que se encuentran guardados*/
-        const programsResponse = await fetch('https://paseraspandoapi.vercel.app/programas');
-        const jsonPrograms = await programsResponse.json();
-        const campusResponse = await fetch('https://paseraspandoapi.vercel.app/sedes')
-        const jsonCampus = await campusResponse.json();
-        setUniversityInfo({
-            programs: jsonPrograms.programs,
-            campus: jsonCampus.campus
+        try {
+            const programsResponse = await fetch('https://paseraspandoapi.vercel.app/programas');
+            const jsonPrograms = await programsResponse.json();
+            const campusResponse = await fetch('https://paseraspandoapi.vercel.app/sedes');
+            const jsonCampus = await campusResponse.json();
+            setUniversityInfo({
+                programs: jsonPrograms.programs,
+                campus: jsonCampus.campus
+            }
+            )
+        } catch (error) {
+            console.error(error);
+            /** ERROR */
+            let timerInterval
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Ha sucedido un error 😫',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
         }
-        )
     },[]);
     return (
         <>
             <Helmet>
-                <title>Pasé Raspando - Registrate</title>
+                <title>Registrate</title>
                 <meta name="description" content="Registrate en Pasé raspando" />
             </Helmet>
             <HeaderLogin />
             <main className='singInUpMain'>
                 <section className='hero'>
                     <h1>Pasé Raspando 📝</h1>
-                    <p>Nunca más volverás a preocuparte por llevar el control de tus notas, Pasé Raspando lo hace por tí</p>
+                    <p>Nunca más volverás a preocuparte por llevar el control de tus notas, <b>Pasé Raspando</b> lo hace por tí</p>
                     <img src={registerImage} alt="Imagen de hombre y mujer llenando un formulario de registro" />
                 </section>
                 {
@@ -124,18 +166,30 @@ export const Register = () => {
                         <label htmlFor="password">Contraseña</label>
                         <div className="password">
                             <input id="password" type="password" {...register("password")} required/>
+                            {isPasswordShowed ?
                             <button type='button' 
-                            className={isPasswordShowed ? 'unshowed':'showed'} 
                             onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEyeInvisible />   
+                            </button>:
+                            <button type='button' 
+                            onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEye />   
                             </button>
+                            }
                         </div>
                         <label htmlFor="passwordConfirmed">Confirmar contraseña</label>
                         <div className="password">
                             <input id="passwordConfirmed" onKeyUp={(event) => validatePassword(event)} type="password" {...register("passwordConfirmed")} required/>
+                            {isPasswordShowed ?
                             <button type='button' 
-                            className={isPasswordShowed ? 'unshowed':'showed'} 
                             onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEyeInvisible />   
+                            </button>:
+                            <button type='button' 
+                            onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEye />   
                             </button>
+                            }
                         </div>
                         <p className={showError ? 'showError' : 'hideError'}>Las contraseñas no coinciden</p>
                         <label>Redes sociales</label>
@@ -175,7 +229,7 @@ export const Register = () => {
                                     }
                                 </select>
                             </>
-                            : <h1>Loading...</h1>
+                            : <div className="loader"><div></div><div></div><div></div><div></div></div>
                         }
                         <input className="submitButton" type="submit" value='Registrarse'/>
                     </form>

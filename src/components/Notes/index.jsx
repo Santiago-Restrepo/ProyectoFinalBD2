@@ -5,6 +5,9 @@ import { Context } from '../../Context';
 /** ESTILOS */
 import './estilos.sass';
 
+/** ALERTS */
+import Swal from 'sweetalert2';
+
 export const Notes = ({setNotes, mode, desabilitar1, desabilitar2}) => {
 	const [ buttonDisabled, setbuttonDisabled ] = useState(false);
 	const [ renderNotes, setrenderNotes ] = useState([]);
@@ -23,7 +26,7 @@ export const Notes = ({setNotes, mode, desabilitar1, desabilitar2}) => {
 
 			<td><input type="text" /></td>
 			<td><input type="text" /></td>
-			<td><input type="text" /></td>
+			<td><input maxLength="5" type="text" /></td>
 		</tr>
 		`;
 		Table.current.insertRow(-1).innerHTML = row;
@@ -60,23 +63,74 @@ export const Notes = ({setNotes, mode, desabilitar1, desabilitar2}) => {
 
 		if(data.length != 0){
 			let porcentajes = [];
+			let porcentajesValidos = true;
 			data.map((nota) => {
-				if(nota.porcentaje != '')
-					porcentajes.push(parseInt(nota.porcentaje))});
+				if(nota.porcentaje != '' && parseFloat(nota.porcentaje) > 0 && parseFloat(nota.porcentaje) <= 100) {
+					porcentajes.push(parseFloat(nota.porcentaje))
+				} else {
+					porcentajesValidos = false;
+				}
+			});
 			
 			let valorTotalPorcentaje = 0;
 			if(porcentajes.length != 0){
 				valorTotalPorcentaje = porcentajes.reduce((valorAnterior, valorActual) => (valorAnterior + valorActual));
 			}
 
-			if(valorTotalPorcentaje <= 100){
+			let notasValidas = true;
+			data.map((nota) => {
+				if(parseFloat(nota.nota) > 5.0 || parseFloat(nota.nota) < 0) {
+					notasValidas = false;
+				}
+			});
+
+			if(porcentajesValidos && notasValidas && valorTotalPorcentaje <= 100) {
 				setNotes(data);
 				setbuttonDisabled(true);
-			} else {
-				alert("Ups! Te pasaste del 100% Por favor ingresa los porcentajes correspondientes");
+			}
+			/** INFO */
+			if(valorTotalPorcentaje > 100) {
+				Swal.fire({
+					icon: 'info',
+					title: 'Porcentajes 😢',
+					html: 'Ups! Te pasaste del 100%. Por favor ingresa los porcentajes correspondientes',
+					confirmButtonColor: '#00923F',
+					confirmButtonText: 'Vale',
+					iconColor: '#0096d2'
+				})
+			}
+
+			if(!notasValidas) {
+				Swal.fire({
+					icon: 'info',
+					title: 'Notas 😢',
+					html: 'Ups! Tienes alguna nota incorrecta. Por favor revisa que el valor de tus notas esten entre 0.0 y 5.0',
+					confirmButtonColor: '#00923F',
+					confirmButtonText: 'Vale',
+					iconColor: '#0096d2'
+				})
+			}
+
+			if(!porcentajesValidos) {
+				Swal.fire({
+					icon: 'info',
+					title: 'Porcentajes 😢',
+					html: 'Ups! Tienes algún porcentaje incorrecto. Por favor revisa que el valor de los porcentajes sean mayores que 0 y menores o iguales a 100%',
+					confirmButtonColor: '#00923F',
+					confirmButtonText: 'Vale',
+					iconColor: '#0096d2'
+				})
 			}
 		} else {
-			alert("Por favor ingrese alguna nota");
+			/** WARNING */
+			Swal.fire({
+				icon: 'warning',
+				title: 'Ingreso de notas',
+				html: 'Por favor ingrese por lo menos una nota',
+				confirmButtonColor: '#dc143c',
+				confirmButtonText: 'Vale',
+				iconColor: '#dc143c'
+			})
 		}
 	}
 	
@@ -85,17 +139,36 @@ export const Notes = ({setNotes, mode, desabilitar1, desabilitar2}) => {
 			/** CUANDO ESTEMOS EN LA PANTALLA VIEWPLAN */
 			/** HACER FETCH Y PASAR LOS VALORES DE LA BD CON EL ID QUE VIENE POR URL */
 
-			const responseNotesId = await fetch(`https://paseraspandoapi.vercel.app/notes/${mode}`,{
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${userAutentication.token}`
-				}
-			});
-
-			const responseJsonNotesId = await responseNotesId.json();
-			// console.log(responseJsonNotesId);
-			setrenderNotes(responseJsonNotesId.Notas);
-			setbuttonDisabled(true);
+			try {
+				const responseNotesId = await fetch(`https://paseraspandoapi.vercel.app/notes/${mode}`,{
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${userAutentication.token}`
+					}
+				});
+	
+				const responseJsonNotesId = await responseNotesId.json();
+				// console.log(responseJsonNotesId);
+				setrenderNotes(responseJsonNotesId.Notas);
+				setbuttonDisabled(true);
+			} catch (error) {
+				console.error(error);
+				/** ERROR */
+				let timerInterval
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					html: 'Ha sucedido un error 😫',
+					timer: 3000,
+					timerProgressBar: true,
+					iconColor: '#DC143C',
+					confirmButtonColor: '#DC143C',
+					confirmButtonText: 'Vale',
+					willClose: () => {
+						clearInterval(timerInterval)
+					}
+				})
+			}
         }
     }, []);
 
@@ -125,7 +198,7 @@ export const Notes = ({setNotes, mode, desabilitar1, desabilitar2}) => {
 										<td><input type="text" defaultValue={nota.nombre} /></td>
 										<td><input type="text" defaultValue={nota.descripcion} /></td>
 										<td><input type="text" defaultValue={nota.porcentaje} /></td>
-										<td><input type="text" defaultValue={nota.nota} /></td>
+										<td><input type="text" maxLength={5} defaultValue={nota.nota} /></td>
 									</tr>	
 								))
 							}

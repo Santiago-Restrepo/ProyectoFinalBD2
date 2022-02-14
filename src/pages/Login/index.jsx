@@ -5,8 +5,12 @@ import { Link , useHistory, Redirect } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
+import { AiFillEye , AiFillEyeInvisible} from 'react-icons/ai';
+
 import loginImage from '../../assets/login.png'
-import Swal from 'sweetalert2';
+
+/** ALERTS */
+import Swal from 'sweetalert2'
 
 export const Login = () => {
     import('../Register/style.sass')
@@ -37,23 +41,27 @@ export const Login = () => {
             setUserAutentication(jsonResponse);
             history.push('/home');
         } catch (error) {
+            console.error(error);
+            /** ERROR */
             let timerInterval
             Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            html: 'Usuario o contraseña incorrectos',
-            timer: 3000,
-            timerProgressBar: true,
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Usuario o contraseña incorrectos',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
             })
-            console.error(error);
         }
     }
     //Función encargada de cambiar la visión de la contraseña
     const togglePassword = (event)=>{
-        const passwordInput = event.target.previousElementSibling;
+        const passwordInput = event.target.parentElement.previousElementSibling || event.target.parentElement.parentElement.previousElementSibling;
         passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
         setIsPasswordShowed(!isPasswordShowed);
     }
@@ -63,13 +71,13 @@ export const Login = () => {
         Object.keys(userAutentication).length === 0 ?
         <>
             <Helmet>
-                <title>Pasé Raspando- Inicia sesión</title>
+                <title>Inicia sesión</title>
                 <meta name="description" content="Inicia sesión en Pasé Raspando" />
             </Helmet>
             <HeaderLogin/>
             <main className='singInUpMain'>
                 <section className='hero'>
-                    <h1>Pasé Raspando</h1>
+                    <h1>Pasé Raspando 📝</h1>
                     <p>¡Que bueno volver a verte!</p>
                     <img src={loginImage} alt="Imagen de un hombre entrando por una puerta" />
                 </section>
@@ -81,10 +89,16 @@ export const Login = () => {
                         <label htmlFor="password">Contraseña</label>
                         <div className="password">
                             <input {...register("password")} id="password" type="password" required/>
+                            {isPasswordShowed ?
                             <button type='button' 
-                            className={isPasswordShowed ? 'unshowed':'showed'} 
-                            onClick={(event)=> togglePassword(event)}>
+                            onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEyeInvisible />   
+                            </button>:
+                            <button type='button' 
+                            onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEye />   
                             </button>
+                            }
                         </div>
                         <input className='submitButton' type='submit' value="Iniciar sesión"/>
                         <Link to="/recovery">¿No recuerdas tu contraseña?</Link>

@@ -14,18 +14,13 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
     margin-bottom: 2rem
     padding: 1.5rem
-    &__loader
-        font-size: 20px
-        font-style: normal
-        font-weight: 500
-        text-align: center
     &__form
         fieldset
             border: 0
             display: flex
             flex-direction: row
             flex-wrap: wrap
-            justify-content: space-evenly
+            justify-content: center
             label
                 color: #545454
                 font-weight: 500
@@ -39,6 +34,7 @@
                 color: #000000
                 font-weight: 100
                 padding: .2rem
+                width: 100%
             input[type="text"]:disabled, select:disabled
                 background-color: #bbbbbb30
             label, input, select
@@ -49,6 +45,7 @@
         justify-content: space-between
         display: flex
         flex-direction: column
+        margin: 0 1rem
     &__buttons
         display: flex
         justify-content: space-evenly
@@ -59,8 +56,11 @@
             background: #00923F
             color: white
         &:disabled
+            background: #8f8f8f
+            border: none
+            color: white
             opacity: 0.5
-            cursor: no-drop
+            cursor: not-allowed
     &__cancelBtn
         border: 2px solid #dc143c
         color: #dc143c
@@ -68,8 +68,11 @@
             background: #dc143c
             color: white
         &:disabled
+            background: #8f8f8f
+            border: none
+            color: white
             opacity: 0.5
-            cursor: no-drop
+            cursor: not-allowed
     &__submitBtn, &__cancelBtn
         background: #ffffff
         width: 6rem
@@ -99,8 +102,9 @@
             transition: all .2s ease
         &:disabled
             opacity: 0.5
-            cursor: no-drop
-
+            cursor: not-allowed
+            background: #8f8f8f
+            box-shadow: none
 @media screen and ( min-width: 768px )
     .firstTitle, .secondTitle
         font-size: 24px

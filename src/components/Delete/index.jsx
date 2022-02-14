@@ -2,6 +2,9 @@ import React, { useContext, useEffect } from 'react';
 import { set } from 'react-hook-form';
 import { Context } from '../../Context';
 
+/** ALERTS */
+import Swal from 'sweetalert2';
+
 export const ScreenDelete = ( { dataShow, setShowDelete, setData } ) => {
     import('./estilos.sass');
     const {userAutentication} = useContext(Context);
@@ -20,6 +23,21 @@ export const ScreenDelete = ( { dataShow, setShowDelete, setData } ) => {
             // console.log(responseJson);
         } catch (error) {
             console.error(error);
+            /** ERROR */
+            let timerInterval
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Ha sucedido un error 😫',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
         }
         setShowDelete({
             show: false,

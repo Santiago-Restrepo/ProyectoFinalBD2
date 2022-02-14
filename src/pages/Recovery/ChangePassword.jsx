@@ -4,7 +4,11 @@ import { useHistory, Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
 import { HeaderLogin } from '../../components/Header/LoginHeader';
+import { AiFillEye , AiFillEyeInvisible} from 'react-icons/ai';
 import ImageMain from '../../assets/undraw_authentication_re_svpt 1.png';
+
+/** ALERTS */
+import Swal from 'sweetalert2';
 
 export const ChangePassword = () => {
 
@@ -15,7 +19,7 @@ export const ChangePassword = () => {
     const { register, handleSubmit } = useForm();
     const [isPasswordShowed, setIsPasswordShowed] = useState(false);
     const togglePassword = (event)=>{
-        const passwordInput = event.target.previousElementSibling;
+        const passwordInput = event.target.parentElement.previousElementSibling || event.target.parentElement.parentElement.previousElementSibling;
         passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
         setIsPasswordShowed(!isPasswordShowed);
     }
@@ -38,15 +42,29 @@ export const ChangePassword = () => {
             history.push('/login');
             
         } catch (error) {
-            alert('Usuario o contraseña incorrectos');
             console.error(error);
+            /** ERROR */
+            let timerInterval
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Usuario o contraseña incorrectos',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
         }
     }
     
     return (
         <>
             <Helmet>
-                <title>Pasé Raspando - Restablecer contraseña</title>
+                <title>Restablecer contraseña</title>
                 <meta name="description" content="Restablece tu contraseña" />
             </Helmet>
             <HeaderLogin />
@@ -63,18 +81,30 @@ export const ChangePassword = () => {
                         <label htmlFor="email">Nueva contraseña:</label>
                         <div className="password">
                             <input id="password" type="password" {...register("password")} required/>
+                            {isPasswordShowed ?
                             <button type='button' 
-                            className={isPasswordShowed ? 'unshowed':'showed'} 
                             onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEyeInvisible />   
+                            </button>:
+                            <button type='button' 
+                            onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEye />   
                             </button>
+                            }
                         </div>
                         <label htmlFor="password">Confirmar nueva contraseña:</label>
                         <div className="password">
                             <input id="confirm_password" type="password" {...register("confirm_password")}/>
+                            {isPasswordShowed ?
                             <button type='button' 
-                            className={isPasswordShowed ? 'unshowed':'showed'} 
                             onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEyeInvisible />   
+                            </button>:
+                            <button type='button' 
+                            onClick={(event)=>{togglePassword(event)}}>
+                                <AiFillEye />   
                             </button>
+                            }
                         </div>
                         <input className='submitButton' type='submit' value="Restablecer"/>
                     </form>

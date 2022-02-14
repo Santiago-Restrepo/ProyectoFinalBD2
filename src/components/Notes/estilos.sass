@@ -72,12 +72,17 @@
     cursor: pointer
     background: none
     color: #545454
-  button:disabled
-    opacity: 0.5
+    border-bottom-right-radius: 1.25rem
+    border-bottom-left-radius: 1.25rem
   button:hover
     color: #545454d3
-.homeworks__btn--new:hover
-  background: #ddddddc4
+    background: #ddddddc4
+  button:disabled
+    color: #545454
+    opacity: 0.5
+    background: #ffffff
+    cursor: not-allowed
+
 
 @media screen and ( max-width: 768px )
   .container__homeworks

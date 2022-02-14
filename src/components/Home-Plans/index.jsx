@@ -3,6 +3,8 @@ import { ScreenDelete } from '../Delete';
 import { Context } from '../../Context';
 import { Link } from 'react-router-dom';
 
+/** ALERTS */
+import Swal from 'sweetalert2';
 
 //import data from './data.json';
 
@@ -31,6 +33,21 @@ export const HomePlans = () =>{
             });  
         } catch (error) {
             console.error(error);
+            /** ERROR */
+            let timerInterval
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Ha sucedido un error 😫',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
         }
     };
 
@@ -55,6 +72,8 @@ export const HomePlans = () =>{
                     })
                     : data.render === false ? <h2 className='TitleEmpty'>Aún no tienes un plan de evaluación</h2>
                     :<h2 className='TitleEmpty'>Cargando...</h2>
+                    /** LOADER QUE SE UTILIZA EN NEWPLAN */
+                    // <div className="loader"><div></div><div></div><div></div><div></div></div>
                 }
             </div>
                 <button className='ButtonAdd'><Link to="/createPlan">+</Link></button>

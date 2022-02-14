@@ -1,38 +1,50 @@
 .containerBtn
     display: flex
     justify-content: flex-end
-    padding: 0 2rem
+    padding: 0 5%
     box-sizing: border-box
     .btnActualizarPlan, .btnReporte
         border-radius: 20px
         border: none
+        font-size: 14px
+        width: 200px
+        height: 40px
         cursor: pointer
+    .btnActualizarPlan
+        margin: 2rem 0.5rem 2rem 0
+    .btnReporte
+        margin: 2rem 0 2rem 0.5rem
     .btnActualizarPlan:disabled,
     .btnReporte:disabled
         opacity: 0.5
-        cursor: no-drop
+        cursor: not-allowed
     .btnActualizarPlan
         background: #00923F
         color: white
     .btnActualizarPlan:hover
         box-shadow: 0 2px 10px #00923F
         transition: all .2s ease
+    .btnActualizarPlan:disabled
+        background-color: #8f8f8f
+        box-shadow: none
     .btnReporte
         background: #E8C63E
         color: black
     .btnReporte:hover
         box-shadow: 0 2px 10px #E8C63E
         transition: all .2s ease
+    .btnReporte:disabled
+        background: #8f8f8f
+        box-shadow: none
+        color: white
 
 @media screen and ( min-width: 768px )
-.containerBtn
-    .btnActualizarPlan, .btnReporte
-        font-size: 18px
-        height: 40px
-        margin-top: 1rem
-        width: 200px
+    .containerBtn
+        .btnActualizarPlan, .btnReporte
+            font-size: 18px
 
 @media screen and ( min-width: 1024px )
-.containerBtn
-    .btnActualizarPlan, .btnReporte
-        margin: 2rem 0.5rem
+    .containerBtn
+        .btnActualizarPlan, .btnReporte
+            height: 50px
+            font-size: 20px
