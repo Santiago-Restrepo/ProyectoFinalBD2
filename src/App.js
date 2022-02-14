@@ -36,7 +36,7 @@ export const App = () => {
                         <Route exact path="/recovery" component={Recovery} />
                         <Route exact path="/change_password" component={ChangePassword} />
                         <Route exact path="/createPlan" component={CreatePlan} />
-                        <Route exact path="/viewPlan/:id" component={ViewPlan} />
+                        <Route exact path="/viewPlan" component={ViewPlan} />
                         <Route exact path="/profile" component={Profile} />
                         <Route path="*" component={NotFound} />
                     </Switch>

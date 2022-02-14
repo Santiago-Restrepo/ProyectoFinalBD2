@@ -148,7 +148,6 @@ export const Notes = ({setNotes, mode, desabilitar1, desabilitar2}) => {
 				});
 	
 				const responseJsonNotesId = await responseNotesId.json();
-				// console.log(responseJsonNotesId);
 				setrenderNotes(responseJsonNotesId.Notas);
 				setbuttonDisabled(true);
 			} catch (error) {
