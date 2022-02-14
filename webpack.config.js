@@ -6,9 +6,6 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // Generar el HTML (dist)
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// Variables de entorno
-const Dotenv = require('dotenv-webpack');
-
 
 module.exports = {
     // Punto de entrada
@@ -60,16 +57,11 @@ module.exports = {
             // Inserte el JS y CSS compilado en el HTML
             inject: true,
             //favicon: "./public/favicon.ico"
+            favicon: "./public/paseraspandoicono.ico"
         }),
         new MiniCssExtractPlugin({
             // dist
             filename: 'assets/estilos-[name].css'
-        }),
-        new Dotenv({
-            // ruta del archivo .env
-            path: './.env',
-            // configuración
-            systemvars: true
-        })        
+        })  
     ]
 };
