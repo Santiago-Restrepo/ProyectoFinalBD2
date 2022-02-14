@@ -5,8 +5,8 @@ import { Context } from './Context';
 /** Páginas */
 import { Register } from './pages/Register'
 import { Login } from './pages/Login'
-import { Recovery } from './pages/Login/Recovery'
-import { ChangePassword } from './pages/Login/ChangePassword'
+import { Recovery } from './pages/Recovery/Recovery'
+import { ChangePassword } from './pages/Recovery/ChangePassword'
 import { Home } from './pages/Home'
 import { Profile } from './pages/Profile'
 import { CreatePlan } from './pages/CreatePlan';

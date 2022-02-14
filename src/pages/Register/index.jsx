@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext} from 'react';
+import { Helmet } from 'react-helmet';
+import { HeaderLogin } from '../../components/Header/LoginHeader';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { Context } from '../../Context';
 import { useHistory } from 'react-router-dom';
+import registerImage from '../../assets/register.png'
 
 import logo from '../../assets/logo.svg'
-
-
 const socialNetworks=[
     {
         name: "Facebook"
@@ -23,32 +24,23 @@ const socialNetworks=[
     }
 ];
 export const Register = () => {
-    import('./style.sass')
-
+    import('./style.sass');
     //Hooks
-
     const history = useHistory();
     const {userAutentication} = useContext(Context);
     if (Object.keys(userAutentication).length !== 0) {
         history.push('/home')
     }
     const { register, handleSubmit, reset } = useForm();
-
     //Estado para hacer toggle a la visión de la password
     const [isPasswordShowed, setIsPasswordShowed] = useState(false);
-
-
     //Estado para el control de errores
-
     const [showError, setShowError] = useState(false);
-
     //Estado para controlar la inserción de nuevas redes
     const [selectedNetworks, setSelectedNetworks] = useState([{network: "",username: ""}]);
     const [userRegistered, setUserRegistered] = useState(false);
-
     //Estado encargado de controlar la información sobre la universidad traída de la base de datos
     const [universityInfo, setUniversityInfo] = useState(null);
-
     //Funcion encargada de realizar la inserción de datos de registro en la base de datos
     const postRegisterData = async (data) => {
         /*Conexión con base de datos para guardar lo que haya en data*/
@@ -69,7 +61,6 @@ export const Register = () => {
         reset();
         setUserRegistered(true);
     }
-    
     //Función encargada de añadir una nueva red al formulario
     const addNetworkToSelected = ()=>{
         const lastSocialNetworkName = document.querySelector('.socialMedia').lastChild.firstChild.value;
@@ -83,20 +74,17 @@ export const Register = () => {
         event.target.value === 'Otra' ? event.target.nextElementSibling.setAttribute('placeholder', 'Url de la red')
         : event.target.nextElementSibling.setAttribute('placeholder', 'Nombre de usuario')
     }
-
     const validatePassword = (e)=>{
         e.target.value === document.getElementById('password').value ? 
         setShowError(false):
         setShowError(true)
     }
-
     //Función encargada de cambiar la visión de la contraseña
     const togglePassword = (event)=>{
         const passwordInput = event.target.previousElementSibling;
         passwordInput.setAttribute('type', !isPasswordShowed ? 'text' : 'password');
         setIsPasswordShowed(!isPasswordShowed);
     }
-
     //Hook de efecto para recibir la información de la base de datos sql
     useEffect(async ()=>{
         /*Conexión con la base de datos para traer los programas que se encuentran guardados*/
@@ -110,21 +98,23 @@ export const Register = () => {
         }
         )
     },[]);
-    
- 
     return (
-        <main className='singInUpMain'>
-            <header>
-                <img src={logo} alt="" />
-            </header>
-            <section className='hero'>
-                <h1>PaséRaspando</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum iste, iusto temporibus vel sapiente architecto dolor expedita est, at ducimus aliquid earum illo minus dolorem.</p>
-            </section>
-            {
-                // Preguntamos si un usuario ya se registró para que si se cumple la condición lo redirigamos al Login
-                !userRegistered ?
-                <form className="registerForm" onSubmit={handleSubmit(postRegisterData)}>
+        <>
+            <Helmet>
+                <title>Pasé Raspando - Registrate</title>
+                <meta name="description" content="Registrate en Pasé raspando" />
+            </Helmet>
+            <HeaderLogin />
+            <main className='singInUpMain'>
+                <section className='hero'>
+                    <h1>Pasé Raspando 📝</h1>
+                    <p>Nunca más volverás a preocuparte por llevar el control de tus notas, Pasé Raspando lo hace por tí</p>
+                    <img src={registerImage} alt="Imagen de hombre y mujer llenando un formulario de registro" />
+                </section>
+                {
+                    // Preguntamos si un usuario ya se registró para que si se cumple la condición lo redirigamos al Login
+                    !userRegistered ?
+                    <form className="registerForm" onSubmit={handleSubmit(postRegisterData)}>
                         <h1>Regístrate ahora</h1>
                         <p>¿Ya tienes una cuenta? <Link to="/login">Ingresa</Link></p>
                         <label htmlFor="fullName">Nombre completo</label>
@@ -188,9 +178,10 @@ export const Register = () => {
                             : <h1>Loading...</h1>
                         }
                         <input className="submitButton" type="submit" value='Registrarse'/>
-                </form>
-                : <Redirect to="/login"/>
-            }
-        </main>
+                    </form>
+                    : <Redirect to="/login"/>
+                }
+            </main>
+        </>
     );
 }

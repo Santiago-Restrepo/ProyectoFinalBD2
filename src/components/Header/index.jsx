@@ -9,7 +9,7 @@ export const Header = () =>{
     import('./estilos.sass');
     const history = useHistory();
     const name = userAutentication.User.name.split(" ")[0];
-
+ 
     const handleExit = () =>{
         localStorage.setItem('userAutentication','{}');
         setUserAutentication({});

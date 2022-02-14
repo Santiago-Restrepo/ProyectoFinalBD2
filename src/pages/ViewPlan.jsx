@@ -1,5 +1,6 @@
 /** LIBRERIAS */
 import React, { useState, useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import { useHistory, useParams } from 'react-router-dom';
 
 /** COMPONENTES */
@@ -88,9 +89,13 @@ export const ViewPlan = () => {
 
     return (
         <>
+            <Helmet>
+                    <title>Plan - Pasé Raspando</title>
+                    <meta name="description" content="Contenido del plan de estudios" />
+            </Helmet>
             <Header/>
             <div className="plans">
-                <h3 className='firstTitle'>Nuevo plan de evaluación</h3>
+                <h3 className='firstTitle'>Plan de evaluación</h3>
                 <NewPlan setPlan={setPlan} mode={id} desabilitar1={setbuttonDisabled1} desabilitar2={setbuttonDisabled2} />
                 <h3 className='secondTitle'>Ingreso de notas</h3>
                 <Notes setNotes={setNotes} mode={id} desabilitar1={setbuttonDisabled1} desabilitar2={setbuttonDisabled2} />
