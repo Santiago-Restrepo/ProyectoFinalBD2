@@ -50,7 +50,7 @@ export const HomePlans = () =>{
                     data.plans.length > 0 ?
                     data.plans.map((value,index)=>{
                         return( 
-                            <Plans setShowDelete={setShowDelete} value={value} key={`asignatura-${index}`}/>
+                            <Plans setShowDelete={setShowDelete} value={value} setData={setData} key={`asignatura-${index}`}/>
                         );
                     })
                     : data.render === false ? <h2 className='TitleEmpty'>Aún no tienes un plan de evaluación</h2>
