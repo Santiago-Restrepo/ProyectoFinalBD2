@@ -216,7 +216,7 @@ export const Register = () => {
                                     }
                                 </select>
                             </>
-                            : <h1>Loading...</h1>
+                            : <div className="loader"><div></div><div></div><div></div><div></div></div>
                         }
                         <input className="submitButton" type="submit" value='Registrarse'/>
                     </form>

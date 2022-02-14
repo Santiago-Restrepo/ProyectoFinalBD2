@@ -87,7 +87,7 @@ export const NewPlan = ({setPlan, mode, desabilitar1, desabilitar2}) => {
             <form className="newPlan__form" id="newPlan__form" onSubmit={handleSubmit(updateDatabase)}>
                 {
                     Object.keys(planInfo).length === 0 ?
-                    <div className="newPlan__loader"><div></div><div></div><div></div><div></div></div>
+                    <div className="loader"><div></div><div></div><div></div><div></div></div>
                     :
                     <>
                         <fieldset>
