@@ -1,7 +1,7 @@
 /** LIBRERIAS */
 import React, { useState, useContext } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 /** COMPONENTES */
 import { Header } from '../components/Header';
@@ -30,7 +30,7 @@ export const ViewPlan = () => {
     const [ buttonDisabled1, setbuttonDisabled1 ] = useState(false);
     const [ buttonDisabled2, setbuttonDisabled2 ] = useState(false);
 
-    let {id} = useParams();
+    let id = location.href.split('=')[1];
 
     const updateData = async () => {
         try {
@@ -46,7 +46,6 @@ export const ViewPlan = () => {
                 });
         
                 const responseJsonUpdatePlan = await responseUpdatePlan.json();
-                // console.log(responseJsonUpdatePlan);
             }
 
             if(notes.length !== 0){
@@ -61,7 +60,6 @@ export const ViewPlan = () => {
                 });
                 
                 const responseJsonUpdateNotes = await responseUpdateNotes.json();
-                // console.log(responseJsonUpdateNotes);
             }
             setbuttonDisabled1(false);
             setbuttonDisabled2(false);
@@ -106,7 +104,6 @@ export const ViewPlan = () => {
                 });
     
             const responseJsonNotesId = await responseNotesId.json();
-            // console.log(responseJsonNotesId);
     
             let acumulador = 0.0;
     

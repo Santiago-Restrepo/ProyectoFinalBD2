@@ -28,15 +28,12 @@ export const NewPlan = ({setPlan, mode, desabilitar1, desabilitar2}) => {
         try {
             const responseAsignaturas = await fetch('https://paseraspandoapi.vercel.app/asignaturas');
             const responseJsonAsignaturas = await responseAsignaturas.json();
-            // console.log(responseJsonAsignaturas);
 
             const responseGrupos = await fetch('https://paseraspandoapi.vercel.app/grupos');
             const responseJsonGrupos = await responseGrupos.json();
-            // console.log(responseJsonGrupos);
             
             const responseDocentes = await fetch('https://paseraspandoapi.vercel.app/empleados');
             const responseJsonDocentes = await responseDocentes.json();
-            // console.log(responseJsonDocentes);
 
             setplanInfo({
                 asignaturas: responseJsonAsignaturas.asignaturas,
@@ -52,7 +49,6 @@ export const NewPlan = ({setPlan, mode, desabilitar1, desabilitar2}) => {
                     }
                 });
                 const responseJsonPlanId = await responsePlanId.json();
-                // console.log(responseJsonPlanId);
 
                 setValue("semestre", responseJsonPlanId.users[0].semestre);
                 setValue("periodo", responseJsonPlanId.users[0].periodo);

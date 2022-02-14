@@ -40,7 +40,6 @@ export const CreatePlan = () => {
             });
     
             const responseJsonPlan = await responsePlan.json();
-            // console.log(responseJsonPlan);
 
             const PLAN_ID = responseJsonPlan.newPlan.insertedId;
             
@@ -55,7 +54,6 @@ export const CreatePlan = () => {
             });
     
             const responseJsonNotes = await responseNotes.json();
-            // console.log(responseJsonNotes);
 
             /** SUCCESS */
             Swal.fire({

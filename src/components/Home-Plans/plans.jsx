@@ -6,8 +6,6 @@ import { Context } from '../../Context';
 export const Plans = ( {setData, value} ) =>{
     const {userAutentication} = useContext(Context);
     import('./estilosPlans.sass');
-    console.log(value)
-
     const showModal = ()=>{
         Swal.fire({
             title: '¿Estás seguro que deseas eliminar este plan de estudios?',
@@ -74,7 +72,7 @@ export const Plans = ( {setData, value} ) =>{
             <p>{value.docente}</p>
             <p>{value.semestre} - {value.periodo}</p>
             <div className='ContentButtons'>
-                <button className='ContentLink'><Link to={`/viewPlan/${value._id}`}>Ver plan</Link></button>
+                <button className='ContentLink'><Link to={`/viewPlan?id=${value._id}`}>Ver plan</Link></button>
                 <div className='ButtonDelete'>
                     <button onClick={showModal}>X</button>
                 </div>

@@ -24,7 +24,6 @@ export const ChangePassword = () => {
         setIsPasswordShowed(!isPasswordShowed);
     }
     const queryDatabase = async (data) => {
-        console.log(data);
         /* Consulta a la base de datos */
         try {
             const response = await fetch('https://paseraspandoapi.vercel.app/change-password',{
