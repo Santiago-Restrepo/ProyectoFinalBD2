@@ -24,21 +24,29 @@
         p
             text-align: center
         .ContentButtons
-            width: 70%
+            width: 90%
             display: flex
-            justify-content: space-between
+            justify-content: space-evenly
             margin-top: 1rem
         button
-            border-radius: 2rem
-            border: none
+            width: 6.5rem
+            border-radius: 0.65rem
             padding: 0.4rem
-            color: white
             cursor: pointer
         .Cancel
-            background-color: #00923F
+            background-color: transparent
+            border: thin solid #545454
+            color: #545454
+        .Cancel:hover
+            background-color: #545454
+            color: white
         .Acept
-            background-color: red
-
+            background-color: transparent
+            border: thin solid #DC143C
+            color: #DC143C
+        .Acept:hover
+            background-color: #DC143C
+            color: white
 
 @media screen and ( min-width: 768px )// MediaQuery para los dispositivos Tablet
     .Content
@@ -50,6 +58,6 @@
 @media screen and ( min-width: 1024px )// MediaQuery para los dispositivos Desktop
     .Content
         .ContentDelete
-            width: 25%
+            width: 35%
             height: 20%
             margin: 7rem auto

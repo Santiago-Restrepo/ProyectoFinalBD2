@@ -7,11 +7,11 @@ export const Plans = ( {setShowDelete, value} ) =>{
     console.log(value)
     return(
         <div className='Card'>
-            <p>{value.asignatura}</p>
+            <p className='Asignature'>{value.asignatura}</p>
             <p>{value.docente}</p>
             <p>{value.semestre} - {value.periodo}</p>
             <div className='ContentButtons'>
-                <button><Link to={`/viewPlan/${value._id}`}>Ver plan</Link></button>
+                <button className='ContentLink'><Link to={`/viewPlan/${value._id}`}>Ver plan</Link></button>
                 <div className='ButtonDelete'>
                     <button onClick={()=> setShowDelete({
                         show: true,

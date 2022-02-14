@@ -39,7 +39,7 @@ export const ScreenDelete = ( { dataShow, setShowDelete, setData } ) => {
                         show: false,
                         datos: ""
                     })}>Cancelar</button>
-                    <button className="Acept" onClick={handleClick}>Confirmar</button>
+                    <button className="Acept" onClick={handleClick}>Eliminar</button>
                 </div>
             </div>
         </div>

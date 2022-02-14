@@ -43,7 +43,7 @@ export const HomePlans = () =>{
     },[data.render === true]);
 
     return(
-        <> 
+        <div className='ContentHomePlans'> 
             <h2 className='TitlePlanes'>Planes</h2>
             <div className='PlansCards'>
                 {
@@ -61,6 +61,6 @@ export const HomePlans = () =>{
                 {
                     showDelete.show && <ScreenDelete dataShow={showDelete.datos} setShowDelete={setShowDelete} setData={setData}/>
                 }
-        </>
+        </div>
     );
 };
