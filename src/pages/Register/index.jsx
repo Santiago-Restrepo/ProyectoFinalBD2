@@ -216,7 +216,7 @@ export const Register = () => {
                                 <select {...register('universityProgram')} required>
                                     {
                                         universityInfo.programs.map((program, index)=>{
-                                            return <option value={program.nombre} key={`program ${index}`}>{program.nombre}</option>
+                                            return <option value={program.codigo} key={`program ${index}`}>{program.nombre}</option>
                                         })
                                     }
                                 </select>

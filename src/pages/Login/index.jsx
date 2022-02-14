@@ -38,6 +38,7 @@ export const Login = () => {
             const jsonResponse = await response.json();
             //Guardamos la información de inicio de sesión en el localStorage y actualizamos el estado para renderizar nuevamente
             localStorage.setItem('userAutentication', JSON.stringify(jsonResponse));
+            debugger
             setUserAutentication(jsonResponse);
             history.push('/home');
         } catch (error) {
