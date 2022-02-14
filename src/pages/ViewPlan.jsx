@@ -117,7 +117,9 @@ export const ViewPlan = () => {
             /** SIN ICON */
             Swal.fire({
                 title: '🍻 Reporte de notas 🍻',
-                imageUrl: 'https://c.tenor.com/XKaBt25ajDMAAAAC/feliz-muy-feliz.gif',
+                imageUrl: acumulador >= 4.0 ? 'https://c.tenor.com/XKaBt25ajDMAAAAC/feliz-muy-feliz.gif' 
+                : acumulador >= 3.0 ? 'https://media4.giphy.com/media/s6EYTqTRqujIY/giphy.gif?cid=790b761129cba503641e133d848e9f6c094204f17a701dd6&rid=giphy.gif&ct=g' 
+                : 'https://media3.giphy.com/media/jUwpNzg9IcyrK/giphy.gif?cid=ecf05e47bs91y379lya1kih2sk16sl4kb0wze9xg9tf2efov&rid=giphy.gif&ct=g',
                 imageWidth: 260,
                 imageHeight: 180,
                 imageAlt: 'Lisa Bailando',

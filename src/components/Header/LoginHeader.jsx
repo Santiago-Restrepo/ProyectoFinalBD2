@@ -6,7 +6,7 @@ export const HeaderLogin = () => {
     import('./estilosHeaderLogin.sass');
  
     return(
-        <header className='header'>
+        <header className='loginHeader'>
             <img className='ImgLogo' src={logo} alt="Logotipo de Pasé Raspando" />
         </header>
     );

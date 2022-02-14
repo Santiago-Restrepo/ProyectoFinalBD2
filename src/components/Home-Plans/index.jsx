@@ -72,7 +72,7 @@ export const HomePlans = () =>{
                     : data.render === false ? <h2 className='TitleEmpty'>Aún no tienes un plan de evaluación</h2>
                     :<h2 className='TitleEmpty'>Cargando...</h2>
                     /** LOADER QUE SE UTILIZA EN NEWPLAN */
-                    // <div className="newPlan__loader"><div></div><div></div><div></div><div></div></div>
+                    // <div className="loader"><div></div><div></div><div></div><div></div></div>
                 }
             </div>
                 <button className='ButtonAdd'><Link to="/createPlan">+</Link></button>

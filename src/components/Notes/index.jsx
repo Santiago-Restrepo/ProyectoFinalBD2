@@ -26,7 +26,7 @@ export const Notes = ({setNotes, mode, desabilitar1, desabilitar2}) => {
 
 			<td><input type="text" /></td>
 			<td><input type="text" /></td>
-			<td><input type="text" /></td>
+			<td><input maxLength="5" type="text" /></td>
 		</tr>
 		`;
 		Table.current.insertRow(-1).innerHTML = row;
@@ -198,7 +198,7 @@ export const Notes = ({setNotes, mode, desabilitar1, desabilitar2}) => {
 										<td><input type="text" defaultValue={nota.nombre} /></td>
 										<td><input type="text" defaultValue={nota.descripcion} /></td>
 										<td><input type="text" defaultValue={nota.porcentaje} /></td>
-										<td><input type="text" defaultValue={nota.nota} /></td>
+										<td><input type="text" maxLength={5} defaultValue={nota.nota} /></td>
 									</tr>	
 								))
 							}
