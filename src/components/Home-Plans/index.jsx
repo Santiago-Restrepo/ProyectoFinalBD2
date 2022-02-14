@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { ScreenDelete } from '../Delete';
 import { Context } from '../../Context';
 import { Link } from 'react-router-dom';
 
@@ -13,8 +12,6 @@ import { Plans } from './plans';
 export const HomePlans = () =>{
     const {userAutentication} = useContext(Context);
     const [data, setData] = useState({plans:"",render:false});
-    const [showDelete, setShowDelete] = useState({show:false,datos:""});
-    let s = 0;
     import('./estilos.sass');
 
     const getPlans = async () =>{
@@ -53,32 +50,27 @@ export const HomePlans = () =>{
 
     useEffect(()=>{
         getPlans();
-    },[]);
-
-    useEffect(()=>{
-        getPlans();
     },[data.render === true]);
 
     return(
-        <> 
-            <div className='PlansCards'>
-                {
-                    data.plans.length > 0 ?
-                    data.plans.map((value,index)=>{
-                        return( 
-                            <Plans setShowDelete={setShowDelete} value={value} key={`asignatura-${index}`}/>
-                        );
-                    })
-                    : data.render === false ? <h2 className='TitleEmpty'>Aún no tienes un plan de evaluación</h2>
-                    :<h2 className='TitleEmpty'>Cargando...</h2>
-                    /** LOADER QUE SE UTILIZA EN NEWPLAN */
-                    // <div className="loader"><div></div><div></div><div></div><div></div></div>
-                }
-            </div>
+        <div className='ContentHomePlans'> 
+            <h2 className='TitlePlanes'>Planes</h2>
+            {data.plans === "" ? <div className="loader"><div></div><div></div><div></div><div></div></div> 
+                :<div className='PlansCards'>
+                    {
+                        data.plans.length > 0 ?
+                        data.plans.map((value,index)=>{
+                            return( 
+                                <Plans value={value} setData={setData} key={`asignatura-${index}`}/>
+                            );
+                        })
+                        :<h2 className='TitleEmpty'>Aún no tienes un plan de evaluación</h2>
+                        /** LOADER QUE SE UTILIZA EN NEWPLAN */
+                        // <div className="loader"><div></div><div></div><div></div><div></div></div>
+                    }
+                </div>
+            }
                 <button className='ButtonAdd'><Link to="/createPlan">+</Link></button>
-                {
-                    showDelete.show && <ScreenDelete dataShow={showDelete.datos} setShowDelete={setShowDelete} setData={setData}/>
-                }
-        </>
+        </div>
     );
 };

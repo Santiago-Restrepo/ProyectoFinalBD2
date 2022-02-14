@@ -1,33 +1,54 @@
 .Card
-    width: 14.25rem
-    height: 8.25rem
+    width: 15.25rem
+    height: 15rem
+    display: flex
+    align-items: center
+    justify-content: space-between
+    flex-direction: column
     margin: 1rem 1.6rem 
     padding: 1rem
     background-color: #FFFFFF
     border-radius: 1.875rem
     text-align: center
     box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25)
+    box-sizing: border-box
+    .Asignature
+        font-weight:600
     p
         margin-top: 0.6rem
     a
         color: #00923F
         display: block
-        margin-top: 2rem
-    .ButtonDelete
-        margin-top: 0rem
-        box-sizing: border-box
-        display: flex
-        justify-content: right
-        button
-            width: 1.5rem
-            height: 1.5rem
-            border-radius: 50%
-            border: none
-            background-color: red
-            opacity: 0.9
-            color: white
-            box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25)
-            cursor: pointer
+        text-decoration: none
+    a:hover
+        color: #FFFFFF
+    .ContentButtons
+        margin: 1rem 1rem 0
+        display: grid
+        grid-template-columns: 1fr 0.5fr
+        justify-content: center
+        .ContentLink
+            width: 7rem
+            height: 2rem
+            background: transparent
+            border: thin solid #00923F
+            border-radius:1.25rem 
+        .ContentLink:hover
+            background-color:  #00923F
+        .ButtonDelete
+            margin: auto
+            box-sizing: border-box
+            button
+                width: 1.8rem
+                height: 1.8rem
+                border-radius: 0.65rem
+                border: thin solid #DC143C
+                background-color: transparent
+                color: #DC143C
+                cursor: pointer
+            button:hover
+                background-color: #DC143C
+                color: #FFFFFF
 
 @media screen and ( min-width: 768px )// MediaQuery para los dispositivos Tablet
     .Card
