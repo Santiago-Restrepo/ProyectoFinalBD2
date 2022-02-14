@@ -94,7 +94,7 @@ export const CreatePlan = () => {
     return (
         <>
             <Helmet>
-                <title>Crear plan - Pasé Raspando</title>
+                <title>Crear plan</title>
                 <meta name="description" content="Crear un nuevo plan de estudios" />
             </Helmet>
             <Header/>

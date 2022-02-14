@@ -143,7 +143,7 @@ export const Register = () => {
     return (
         <>
             <Helmet>
-                <title>Pasé Raspando - Registrate</title>
+                <title>Registrate</title>
                 <meta name="description" content="Registrate en Pasé raspando" />
             </Helmet>
             <HeaderLogin />

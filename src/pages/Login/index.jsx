@@ -71,7 +71,7 @@ export const Login = () => {
         Object.keys(userAutentication).length === 0 ?
         <>
             <Helmet>
-                <title>Pasé Raspando- Inicia sesión</title>
+                <title>Inicia sesión</title>
                 <meta name="description" content="Inicia sesión en Pasé Raspando" />
             </Helmet>
             <HeaderLogin/>

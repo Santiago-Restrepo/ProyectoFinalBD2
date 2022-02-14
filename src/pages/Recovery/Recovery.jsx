@@ -58,7 +58,7 @@ export const Recovery = () => {
     return (
         <>
             <Helmet>
-                <title>Pasé Raspando - Recuperar contraseña</title>
+                <title>Recuperar contraseña</title>
                 <meta name="description" content="Recupera tu contraseña" />
             </Helmet>
             <HeaderLogin />

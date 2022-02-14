@@ -64,7 +64,7 @@ export const ChangePassword = () => {
     return (
         <>
             <Helmet>
-                <title>Pasé Raspando - Restablecer contraseña</title>
+                <title>Restablecer contraseña</title>
                 <meta name="description" content="Restablece tu contraseña" />
             </Helmet>
             <HeaderLogin />

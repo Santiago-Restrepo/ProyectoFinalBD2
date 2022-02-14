@@ -151,7 +151,7 @@ export const ViewPlan = () => {
     return (
         <>
             <Helmet>
-                    <title>Plan - Pasé Raspando</title>
+                    <title>Plan de evaluación</title>
                     <meta name="description" content="Contenido del plan de estudios" />
             </Helmet>
             <Header/>
