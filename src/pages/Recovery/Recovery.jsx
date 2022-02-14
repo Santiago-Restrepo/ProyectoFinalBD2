@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 
 import { HeaderLogin } from '../../components/Header/LoginHeader';
 
+/** ALERTS */
+import Swal from 'sweetalert2';
+
 // Assets
 import logo from '../../assets/logo.svg';
 import ImageMain from '../../assets/undraw_forgot_password_re_hxwm 1.png';
@@ -33,8 +36,22 @@ export const Recovery = () => {
             history.push('/login')
             
         } catch (error) {
-            alert('Usuario o contraseña incorrectos')
-            console.error(error)
+            console.error(error);
+            /** ERROR */
+            let timerInterval
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Usuario o contraseña incorrectos',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
         }
     }
 

@@ -11,6 +11,9 @@ import { Notes } from '../components/Notes';
 /** CONTEXTO */
 import { Context } from '../Context';
 
+/** ALERTS */
+import Swal from 'sweetalert2';
+
 export const CreatePlan = () => {
     /** VALIDACIÓN SI EL TOKEN YA EXISTE */
     const history = useHistory();
@@ -53,10 +56,35 @@ export const CreatePlan = () => {
     
             const responseJsonNotes = await responseNotes.json();
             // console.log(responseJsonNotes);
+
+            /** SUCCESS */
+            Swal.fire({
+                icon: 'success',
+                title: '¡Felicidades! 🎉',
+                html: 'Se ha creado tu plan de evaluación correctamente! 😄',
+                confirmButtonColor: '#00923F',
+                confirmButtonText: 'Vale',
+                iconColor: '#00923F'
+            })
             
             history.push('/home');
         } catch (error) {
-            alert("Ha sucedido un error 😫");
+            console.error(error);
+            /** ERROR */
+            let timerInterval
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Ha sucedido un error 😫',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
         }
         
     }

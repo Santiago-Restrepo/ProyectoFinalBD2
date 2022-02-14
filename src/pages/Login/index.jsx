@@ -6,7 +6,9 @@ import { useForm } from "react-hook-form";
 import logo from '../../assets/logo.svg'
 import { Context } from '../../Context';
 import loginImage from '../../assets/login.png'
-import Swal from 'sweetalert2';
+
+/** ALERTS */
+import Swal from 'sweetalert2'
 
 export const Login = () => {
     import('../Register/style.sass')
@@ -37,18 +39,22 @@ export const Login = () => {
             setUserAutentication(jsonResponse);
             history.push('/home');
         } catch (error) {
+            console.error(error);
+            /** ERROR */
             let timerInterval
             Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            html: 'Usuario o contraseña incorrectos',
-            timer: 3000,
-            timerProgressBar: true,
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Usuario o contraseña incorrectos',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
             })
-            console.error(error);
         }
     }
     //Función encargada de cambiar la visión de la contraseña

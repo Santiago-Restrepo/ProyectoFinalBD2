@@ -6,6 +6,9 @@ import { useForm } from "react-hook-form";
 import { HeaderLogin } from '../../components/Header/LoginHeader';
 import ImageMain from '../../assets/undraw_authentication_re_svpt 1.png';
 
+/** ALERTS */
+import Swal from 'sweetalert2';
+
 export const ChangePassword = () => {
 
     import('../Register/style.sass');
@@ -38,8 +41,22 @@ export const ChangePassword = () => {
             history.push('/login');
             
         } catch (error) {
-            alert('Usuario o contraseña incorrectos');
             console.error(error);
+            /** ERROR */
+            let timerInterval
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Usuario o contraseña incorrectos',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
         }
     }
     

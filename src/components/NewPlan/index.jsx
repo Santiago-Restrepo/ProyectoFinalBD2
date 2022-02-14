@@ -6,6 +6,9 @@ import { Context } from '../../Context';
 /** ESTILOS */
 import './estilos.sass';
 
+/** ALERTS */
+import Swal from 'sweetalert2';
+
 export const NewPlan = ({setPlan, mode, desabilitar1, desabilitar2}) => {
     const { register, handleSubmit, setValue } = useForm();
     const [ planInfo, setplanInfo ] = useState({});
@@ -59,7 +62,22 @@ export const NewPlan = ({setPlan, mode, desabilitar1, desabilitar2}) => {
                 setbuttonDisabled(true);
             }
         } catch (error) {
-            alert("Ha sucedido un error 😫");
+            console.error(error);
+            /** ERROR */
+            let timerInterval
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: 'Ha sucedido un error 😫',
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#DC143C',
+                confirmButtonColor: '#DC143C',
+                confirmButtonText: 'Vale',
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
         }
         
     }, []);
@@ -69,7 +87,7 @@ export const NewPlan = ({setPlan, mode, desabilitar1, desabilitar2}) => {
             <form className="newPlan__form" id="newPlan__form" onSubmit={handleSubmit(updateDatabase)}>
                 {
                     Object.keys(planInfo).length === 0 ?
-                    <h1 className='newPlan__loader'>...Cargando Información...</h1>
+                    <div className="newPlan__loader"><div></div><div></div><div></div><div></div></div>
                     :
                     <>
                         <fieldset>

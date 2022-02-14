@@ -1,12 +1,19 @@
 .containerBtn
     display: flex
     justify-content: flex-end
-    padding: 0 2rem
+    padding: 0 5%
     box-sizing: border-box
     .btnActualizarPlan, .btnReporte
         border-radius: 20px
         border: none
+        font-size: 14px
+        width: 200px
+        height: 40px
         cursor: pointer
+    .btnActualizarPlan
+        margin: 2rem 0.5rem 2rem 0
+    .btnReporte
+        margin: 2rem 0 2rem 0.5rem
     .btnActualizarPlan:disabled,
     .btnReporte:disabled
         opacity: 0.5
@@ -25,14 +32,12 @@
         transition: all .2s ease
 
 @media screen and ( min-width: 768px )
-.containerBtn
-    .btnActualizarPlan, .btnReporte
-        font-size: 18px
-        height: 40px
-        margin-top: 1rem
-        width: 200px
+    .containerBtn
+        .btnActualizarPlan, .btnReporte
+            font-size: 18px
 
 @media screen and ( min-width: 1024px )
-.containerBtn
-    .btnActualizarPlan, .btnReporte
-        margin: 2rem 0.5rem
+    .containerBtn
+        .btnActualizarPlan, .btnReporte
+            height: 50px
+            font-size: 20px
