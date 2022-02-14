@@ -13,7 +13,7 @@ export const Plans = ( {setData, value} ) =>{
             title: '¿Estás seguro que deseas eliminar este plan de estudios?',
             text: `${value.asignatura}`,
             icon: 'warning',
-            iconColor: '#E8C63E',
+            iconColor: '#E8C63E',   
             showCancelButton: true,
             confirmButtonColor: '#DC143C',
             cancelButtonColor: '#545454',
@@ -49,6 +49,21 @@ export const Plans = ( {setData, value} ) =>{
                     })
                 } catch (error) {
                     console.error(error);
+                    /** ERROR */
+                    let timerInterval
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        html: 'Ha sucedido un error 😫',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        iconColor: '#DC143C',
+                        confirmButtonColor: '#DC143C',
+                        confirmButtonText: 'Vale',
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    })
                 }
             }
         })
