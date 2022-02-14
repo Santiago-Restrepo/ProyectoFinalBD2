@@ -75,7 +75,7 @@ export const Login = () => {
             <HeaderLogin/>
             <main className='singInUpMain'>
                 <section className='hero'>
-                    <h1>Pasé Raspando</h1>
+                    <h1>Pasé Raspando 📝</h1>
                     <p>¡Que bueno volver a verte!</p>
                     <img src={loginImage} alt="Imagen de un hombre entrando por una puerta" />
                 </section>

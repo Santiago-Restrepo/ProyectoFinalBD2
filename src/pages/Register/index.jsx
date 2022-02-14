@@ -149,7 +149,7 @@ export const Register = () => {
             <main className='singInUpMain'>
                 <section className='hero'>
                     <h1>Pasé Raspando 📝</h1>
-                    <p>Nunca más volverás a preocuparte por llevar el control de tus notas, Pasé Raspando lo hace por tí</p>
+                    <p>Nunca más volverás a preocuparte por llevar el control de tus notas, <b>Pasé Raspando</b> lo hace por tí</p>
                     <img src={registerImage} alt="Imagen de hombre y mujer llenando un formulario de registro" />
                 </section>
                 {
