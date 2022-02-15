@@ -17,45 +17,140 @@ export const NewPlan = ({setPlan, mode, desabilitar1, desabilitar2}) => {
     const { userAutentication } = useContext(Context);
 
     const periodos = ['1', '2'];
-    
+
     const updateDatabase = (data) => {
+        data.asignatura = JSON.parse(data.asignatura).nombre;
+        data.grupo = JSON.parse(data.grupo).numero;
 		setPlan(data);
         setbuttonDisabled(true);
         desabilitar1(true);
     }
 
-    useEffect(async () => {
-        try {
-            const responseAsignaturas = await fetch('https://paseraspandoapi.vercel.app/asignaturas');
-            const responseJsonAsignaturas = await responseAsignaturas.json();
-
-            const responseGrupos = await fetch('https://paseraspandoapi.vercel.app/grupos');
+    const fetchGroups = async (e) => {
+        if(e.target.selectedIndex != 0) {
+            const responseGrupos = await fetch('https://paseraspandoapi.vercel.app/grupos', {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    signatureId: JSON.parse(e.target.value).codigo
+                })
+            });
             const responseJsonGrupos = await responseGrupos.json();
-            
-            const responseDocentes = await fetch('https://paseraspandoapi.vercel.app/empleados');
-            const responseJsonDocentes = await responseDocentes.json();
-
             setplanInfo({
-                asignaturas: responseJsonAsignaturas.asignaturas,
+                asignaturas: planInfo.asignaturas,
                 grupos: responseJsonGrupos.grupos,
+                docentes: []
+            });
+            let selectGroup = e.target.parentElement.parentElement.childNodes[3].childNodes[1];
+            selectGroup.selectedIndex = 0;
+        } else {
+            let selectGroup = e.target.parentElement.parentElement.childNodes[3].childNodes[1];
+            selectGroup.selectedIndex = 0;
+            let selectTeacher = e.target.parentElement.parentElement.childNodes[4].childNodes[1];
+            selectTeacher.selectedIndex = 0;
+        }
+    }
+    
+    const fetchTeachers = async (e) => {
+        if(e.target.selectedIndex != 0) {
+            const responseDocentes = await fetch('https://paseraspandoapi.vercel.app/empleados', {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    teacherId: JSON.parse(e.target.value).id_profesor
+                })
+            });
+            const responseJsonDocentes = await responseDocentes.json();
+            setplanInfo({
+                asignaturas: planInfo.asignaturas,
+                grupos: planInfo.grupos,
                 docentes: responseJsonDocentes.empleados
             });
+        } else {
+            let selectTeacher = e.target.parentElement.parentElement.childNodes[4].childNodes[1];
+            selectTeacher.selectedIndex = 0;
+        }
+    }
+    
+    useEffect(async () => {
+        try {
+            const responseAsignaturas = await fetch('https://paseraspandoapi.vercel.app/asignaturas', {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    programId: userAutentication.User.program
+                })
+            });
+            const responseJsonAsignaturas = await responseAsignaturas.json();
 
-            if(mode){
-                const responsePlanId = await fetch(`https://paseraspandoapi.vercel.app/plan/${mode}`,{
+            if(mode) {
+                const responsePlanId = await fetch(`https://paseraspandoapi.vercel.app/plan/${mode}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${userAutentication.token}`
                     }
                 });
                 const responseJsonPlanId = await responsePlanId.json();
+                
+                let codigoAsignatura = '';
+                responseJsonAsignaturas.asignaturas.forEach(asignatura => {
+                    if(asignatura.nombre === responseJsonPlanId.users[0].asignatura) {
+                        codigoAsignatura = asignatura.codigo;
+                    }
+                });
+                const responseGrupos = await fetch('https://paseraspandoapi.vercel.app/grupos', {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        signatureId: codigoAsignatura
+                    })
+                });
+                const responseJsonGrupos = await responseGrupos.json();
+                
+                let idProfesor = '';
+                responseJsonGrupos.grupos.forEach(grupo => {
+                    if(grupo.numero === responseJsonPlanId.users[0].grupo) {
+                        idProfesor = grupo.id_profesor;
+                    }
+                });
+                const responseDocentes = await fetch('https://paseraspandoapi.vercel.app/empleados', {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        teacherId: idProfesor
+                    })
+                });
+                const responseJsonDocentes = await responseDocentes.json();
+                
+                setplanInfo({
+                    asignaturas: responseJsonAsignaturas.asignaturas,
+                    grupos: responseJsonGrupos.grupos,
+                    docentes: responseJsonDocentes.empleados
+                });
 
                 setValue("semestre", responseJsonPlanId.users[0].semestre);
                 setValue("periodo", responseJsonPlanId.users[0].periodo);
-                setValue("asignatura", responseJsonPlanId.users[0].asignatura);
-                setValue("grupo", responseJsonPlanId.users[0].grupo);
+                setValue("asignatura", JSON.stringify({codigo: codigoAsignatura, nombre: responseJsonPlanId.users[0].asignatura}));
+                setValue("grupo", JSON.stringify({id_profesor: idProfesor, numero: responseJsonPlanId.users[0].grupo}));
                 setValue("docente", responseJsonPlanId.users[0].docente);
+                
                 setbuttonDisabled(true);
+            } else {
+                setplanInfo({
+                    asignaturas: responseJsonAsignaturas.asignaturas,
+                    grupos: [],
+                    docentes: []
+                });
             }
         } catch (error) {
             console.error(error);
@@ -102,25 +197,27 @@ export const NewPlan = ({setPlan, mode, desabilitar1, desabilitar2}) => {
                             </div>
                             <div className="newPlan__field">
                                 <label htmlFor="asignatura">Asignatura</label>
-                                <select name="asignatura" id="asignatura" required disabled={buttonDisabled} {...register("asignatura")} >
+                                <select name="asignatura" id="asignatura" required disabled={buttonDisabled} {...register("asignatura")} 
+                                    onChange={(e) => fetchGroups(e)}>
                                     <option value="">-</option>
                                     {
-                                        planInfo.asignaturas.map((asignatura, index) => <option key={index} >{asignatura.nombre}</option>)
+                                        planInfo.asignaturas.map((asignatura, index) => <option key={index} value={JSON.stringify({codigo: asignatura.codigo, nombre: asignatura.nombre})} >{asignatura.nombre}</option>)
                                     }
                                 </select>
                             </div>
                             <div className="newPlan__field">
                                 <label htmlFor="grupo">Grupo</label>
-                                <select name="grupo" id="grupo" required disabled={buttonDisabled} {...register("grupo")} >
+                                <select name="grupo" id="grupo" required disabled={buttonDisabled} {...register("grupo")}
+                                    onChange={(e) => fetchTeachers(e)}>
                                     <option value="">-</option>
                                     {
-                                        planInfo.grupos.map((grupo, index) => <option key={index} >{grupo.numero}</option>)
+                                        planInfo.grupos.map((grupo, index) => <option key={index} value={JSON.stringify({id_profesor: grupo.id_profesor, numero: grupo.numero})} >{grupo.numero}</option>)
                                     }
                                 </select>
                             </div>
                             <div className="newPlan__field">
                                 <label htmlFor="docente">Docente</label>
-                                <select name="docente" id="docente" required disabled={buttonDisabled} {...register("docente")} >
+                                <select name="docente" id="docente" required  disabled={buttonDisabled} {...register("docente")}>
                                     <option value="">-</option>
                                     {
                                         planInfo.docentes.map((docente, index) => <option key={index} >{docente.nombres + " " + docente.apellidos}</option>)
